@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import "./style.css";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 const ButtonComponent = ({ boxOpen, setBoxOpen, value }) => {
   const navigate = useNavigate();
@@ -10,18 +9,36 @@ const ButtonComponent = ({ boxOpen, setBoxOpen, value }) => {
     setBoxOpen(!boxOpen);
   };
   const GoBackPage = () => {
-    navigate("/");
+    navigate('/');
+  };
+  const CommentAdd = () => {
+    alert(1);
+  };
+  const CommentDelete = () => {
+    alert(1);
+  };
+  const CommentToggle = () => {
+    alert(1);
   };
 
-  const [btnName, setBtnName] = useState("");
+  const [btnName, setBtnName] = useState('');
 
   const btnBunc = () => {
     switch (value) {
-      case "ActiveAddBox":
+      case 'ActiveAddBox':
         ActiveAddBox();
         break;
-      case "BackPage":
+      case 'BackPage':
         GoBackPage();
+        break;
+      case 'CommentAdd':
+        CommentAdd();
+        break;
+      case 'CommentDelete':
+        CommentDelete();
+        break;
+      case 'CommentToggle':
+        CommentToggle();
         break;
       default:
         break;
@@ -30,17 +47,26 @@ const ButtonComponent = ({ boxOpen, setBoxOpen, value }) => {
 
   useEffect(() => {
     switch (value) {
-      case "ActiveAddBox":
-        setBtnName("리스트 추가하기");
+      case 'ActiveAddBox':
+        setBtnName('리스트 추가하기');
         break;
-      case "BackPage":
-        setBtnName("뒤로가기");
+      case 'BackPage':
+        setBtnName('뒤로가기');
         break;
-      case "DeleteDetail":
-        setBtnName("수정하기");
+      case 'DeleteDetail':
+        setBtnName('수정하기');
         break;
-      case "EditDetail":
-        setBtnName("삭제하기");
+      case 'EditDetail':
+        setBtnName('삭제하기');
+        break;
+      case 'CommentAdd':
+        setBtnName('코멘트 추가하기');
+        break;
+      case 'CommentDelete':
+        setBtnName('코멘트 삭제하기');
+        break;
+      case 'CommentToggle':
+        setBtnName('코멘트 수정하기');
         break;
       default:
         break;

@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import CommentInputComponent from "../component/comment/CommentInput";
+import Comment from "../component/comment/Comment";
 import Detailcomponent from "../component/detail/Detailindex";
 
 const DetailPage = () => {
@@ -8,7 +10,8 @@ const DetailPage = () => {
       <Detailcomponent />
 
       {/* 상국님 */}
-      <div>todo_comment</div>
+      <CommentInputComponent />
+      <Comment />
     </div>
   );
 };
