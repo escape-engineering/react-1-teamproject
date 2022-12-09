@@ -1,7 +1,11 @@
 .Active_btn_wrap {
   width: 200px;
   height: 50px;
+  margin-bottom: 50px;
 }
 .Active_btn_wrap button {
   font-size: 20px;
+}
+.listAddWrap {
+  margin-bottom: 10px;
 }
