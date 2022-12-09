@@ -4,6 +4,8 @@ import "./style.css";
 const ButtonComponent = ({ value }) => {
   return value === "ActiveAddBox" ? (
     <StyledButton>리스트 추가하기</StyledButton>
+  ) : value === "BackPage" ? (
+    <StyledButton>뒤로가기</StyledButton>
   ) : null;
 };
 
@@ -15,6 +17,7 @@ const StyledButton = styled.button`
   font-weight: bold;
   color: white;
   border-radius: 10px;
+  cursor: pointer;
 `;
 
 export default ButtonComponent;
