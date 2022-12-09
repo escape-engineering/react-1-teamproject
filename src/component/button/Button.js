@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import "./style.css";
 
-const ButtonComponent = ({ value }) => {
+const ButtonComponent = ({ boxOpen, setBoxOpen, value }) => {
+  //리스트 추가 컴포넌트 활성화 여부
+  const ActiveAddBox = () => {
+    setBoxOpen(!boxOpen);
+  };
+
   return value === "ActiveAddBox" ? (
-    <StyledButton>리스트 추가하기</StyledButton>
+    <StyledButton onClick={ActiveAddBox}>리스트 추가하기</StyledButton>
   ) : value === "BackPage" ? (
     <StyledButton>뒤로가기</StyledButton>
   ) : null;
