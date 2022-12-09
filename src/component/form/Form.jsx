@@ -10,6 +10,8 @@ const FormComponent = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
 
+  const [inputError, setInputError] = useState("");
+
   //타이틀 작성
   const titleWrite = ({ target: { value } }) => {
     setTitle(value);
@@ -19,48 +21,75 @@ const FormComponent = () => {
     setDesc(value);
   };
 
+  //에러 메세지 삭제
+  const removeError = () => {
+    setInputError("");
+  };
+
   return (
     <Wrap>
       <div className="Active_btn_wrap">
         <ButtonComponent
-          boxOpen={boxOpen}
-          setBoxOpen={setBoxOpen}
+          getState={boxOpen}
+          setState={setBoxOpen}
           value="ActiveAddBox"
         />
       </div>
-      <ListAddBox isActive={boxOpen}>
-        <div className="listAddWrap">
-          <label htmlFor="listAddLabel">제목</label>
-          <input
-            id="listAddtitle"
-            type="text"
-            value={title}
-            onChange={titleWrite}
-          />
-        </div>
-        <div className="listAddWrap">
-          <label htmlFor="listAddLabel">내용</label>
-          <textarea
-            id="listAddDesc"
-            type="text"
-            value={desc}
-            onChange={descWrite}
-          ></textarea>
-        </div>
-      </ListAddBox>
+      <ActiveWrap isActive={boxOpen}>
+        <ListAddBox>
+          <div className="listAddWrap">
+            <label htmlFor="listAddLabel">제목</label>
+            <input
+              id="listAddtitle"
+              type="text"
+              value={title}
+              onChange={titleWrite}
+              onFocus={removeError}
+            />
+          </div>
+          <div className="listAddWrap">
+            <label htmlFor="listAddLabel">내용</label>
+            <textarea
+              id="listAddDesc"
+              type="text"
+              value={desc}
+              onChange={descWrite}
+              onFocus={removeError}
+            ></textarea>
+          </div>
+          <div className="input_error">{inputError}</div>
+          <div className="submit_btn_wrap">
+            <ButtonComponent
+              getState={[title, desc]}
+              setState={[setTitle, setDesc, setInputError]}
+              value="todoSubmit"
+            />
+          </div>
+        </ListAddBox>
+        <TodoAddExplainWrap>
+          <li>제목은 15자 이하로 작성하여 주세요.</li>
+        </TodoAddExplainWrap>
+      </ActiveWrap>
     </Wrap>
   );
 };
 
+//styled-components
 const Wrap = styled.div`
   margin-bottom: 50px;
 `;
+const ActiveWrap = styled.div`
+  display: ${({ isActive }) => (isActive ? "flex" : "none")};
+`;
 const ListAddBox = styled.div`
-  display: ${({ isActive }) => (isActive ? "block" : "none")};
   padding: 20px;
-  width: 330px;
-  background-color: #c29cd8;
+  width: 320px;
+  background-color: #d9b5ed;
   border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   label {
     font-size: 20px;
     font-weight: bold;
@@ -80,12 +109,18 @@ const ListAddBox = styled.div`
     width: 300px;
     padding: 10px;
     height: 70px;
-    font-size: 20px;
+    font-size: 15px;
     border: none;
     outline: none;
     border-radius: 10px;
     resize: none;
   }
+`;
+const TodoAddExplainWrap = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-left: 20px;
 `;
 
 export default FormComponent;
