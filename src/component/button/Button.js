@@ -1,17 +1,53 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "./style.css";
 
 const ButtonComponent = ({ boxOpen, setBoxOpen, value }) => {
+  const navigate = useNavigate();
   //리스트 추가 컴포넌트 활성화 여부
   const ActiveAddBox = () => {
     setBoxOpen(!boxOpen);
   };
+  const GoBackPage = () => {
+    navigate("/");
+  };
 
-  return value === "ActiveAddBox" ? (
-    <StyledButton onClick={ActiveAddBox}>리스트 추가하기</StyledButton>
-  ) : value === "BackPage" ? (
-    <StyledButton>뒤로가기</StyledButton>
-  ) : null;
+  const [btnName, setBtnName] = useState("");
+
+  const btnBunc = () => {
+    switch (value) {
+      case "ActiveAddBox":
+        ActiveAddBox();
+        break;
+      case "BackPage":
+        GoBackPage();
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    switch (value) {
+      case "ActiveAddBox":
+        setBtnName("리스트 추가하기");
+        break;
+      case "BackPage":
+        setBtnName("뒤로가기");
+        break;
+      case "DeleteDetail":
+        setBtnName("수정하기");
+        break;
+      case "EditDetail":
+        setBtnName("삭제하기");
+        break;
+      default:
+        break;
+    }
+  }, []);
+
+  return <StyledButton onClick={btnBunc}>{btnName}</StyledButton>;
 };
 
 const StyledButton = styled.button`

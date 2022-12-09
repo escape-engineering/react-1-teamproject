@@ -10,11 +10,13 @@ const FormComponent = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
 
-  const titleWrite = (e) => {
-    setTitle(e.target.value);
+  //타이틀 작성
+  const titleWrite = ({ target: { value } }) => {
+    setTitle(value);
   };
-  const descWrite = (e) => {
-    setDesc(e.target.value);
+  // 내용 작성
+  const descWrite = ({ target: { value } }) => {
+    setDesc(value);
   };
 
   return (
@@ -28,16 +30,22 @@ const FormComponent = () => {
       </div>
       <ListAddBox isActive={boxOpen}>
         <div className="listAddWrap">
-          <label htmlFor="listAddLabel" value={title} onChange={titleWrite}>
-            제목
-          </label>
-          <input id="listAddtitle" type="text" />
+          <label htmlFor="listAddLabel">제목</label>
+          <input
+            id="listAddtitle"
+            type="text"
+            value={title}
+            onChange={titleWrite}
+          />
         </div>
         <div className="listAddWrap">
-          <label htmlFor="listAddLabel" value={desc} onChange={descWrite}>
-            내용
-          </label>
-          <textarea id="listAddDesc" type="text"></textarea>
+          <label htmlFor="listAddLabel">내용</label>
+          <textarea
+            id="listAddDesc"
+            type="text"
+            value={desc}
+            onChange={descWrite}
+          ></textarea>
         </div>
       </ListAddBox>
     </Wrap>
