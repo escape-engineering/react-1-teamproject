@@ -1,8 +1,10 @@
+import FormComponent from "../component/form/Form";
+
 const MainPage = () => {
   return (
     <div>
       {/* 재정 */}
-      <div>todoAdd</div>
+      <FormComponent />
 
       {/* 진아님 */}
       <div>todoList</div>
