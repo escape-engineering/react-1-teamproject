@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import ButtonComponent from '../button/Button';
 
-import '../button/style.css';
-
 const Comment = () => {
   return (
     <CommentWrap>
