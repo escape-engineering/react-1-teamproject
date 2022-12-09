@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "./style.css";
 
 const ButtonComponent = ({ boxOpen, setBoxOpen, value }) => {
+  const navigate = useNavigate();
   //리스트 추가 컴포넌트 활성화 여부
   const ActiveAddBox = () => {
     setBoxOpen(!boxOpen);
+  };
+  const GoBackPage = () => {
+    navigate("/");
   };
 
   const [btnName, setBtnName] = useState("");
@@ -14,6 +19,9 @@ const ButtonComponent = ({ boxOpen, setBoxOpen, value }) => {
     switch (value) {
       case "ActiveAddBox":
         ActiveAddBox();
+        break;
+      case "BackPage":
+        GoBackPage();
         break;
       default:
         break;
@@ -24,6 +32,15 @@ const ButtonComponent = ({ boxOpen, setBoxOpen, value }) => {
     switch (value) {
       case "ActiveAddBox":
         setBtnName("리스트 추가하기");
+        break;
+      case "BackPage":
+        setBtnName("뒤로가기");
+        break;
+      case "DeleteDetail":
+        setBtnName("수정하기");
+        break;
+      case "EditDetail":
+        setBtnName("삭제하기");
         break;
       default:
         break;
