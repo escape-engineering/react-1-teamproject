@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import "./style.css";
 
@@ -7,9 +8,29 @@ const ButtonComponent = ({ boxOpen, setBoxOpen, value }) => {
     setBoxOpen(!boxOpen);
   };
 
-  return value === "ActiveAddBox" ? (
-    <StyledButton onClick={ActiveAddBox}>리스트 추가하기</StyledButton>
-  ) : null;
+  const [btnName, setBtnName] = useState("");
+
+  const btnBunc = () => {
+    switch (value) {
+      case "ActiveAddBox":
+        ActiveAddBox();
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    switch (value) {
+      case "ActiveAddBox":
+        setBtnName("리스트 추가하기");
+        break;
+      default:
+        break;
+    }
+  }, []);
+
+  return <StyledButton onClick={btnBunc}>{btnName}</StyledButton>;
 };
 
 const StyledButton = styled.button`
