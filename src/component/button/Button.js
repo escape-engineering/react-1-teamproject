@@ -64,6 +64,22 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   const CommentToggle = () => {
     alert(1);
   };
+  //Todo 삭제하기
+  const DeleteTodo = () => {
+    alert(1);
+  };
+  // Todo 완료하기
+  const DoneTodo = () => {
+    alert(1);
+  };
+  // Todo 취소하기
+  const ShiftTodo = () => {
+    alert(1);
+  };
+  // Todo 상세보기
+  const DetailTodo = () => {
+    navigate("/list");
+  };
 
   const [btnName, setBtnName] = useState("");
 
@@ -87,6 +103,18 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
         break;
       case "todoSubmit":
         todoSubmit();
+        break;
+      case "DeleteTodo":
+        DeleteTodo();
+        break;
+      case "DoneTodo":
+        DoneTodo();
+        break;
+      case "ShiftTodo":
+        ShiftTodo();
+        break;
+      case "DetailTodo":
+        DetailTodo();
         break;
       default:
         break;
@@ -117,8 +145,17 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "CommentDelete":
         setBtnName("코멘트 삭제하기");
         break;
-      case "CommentToggle":
-        setBtnName("코멘트 수정하기");
+      case "DeleteTodo":
+        setBtnName("삭제하기");
+        break;
+      case "DoneTodo":
+        setBtnName("완료하기");
+        break;
+      case "ShiftTodo":
+        setBtnName("취소하기");
+        break;
+      case "DetailTodo":
+        setBtnName("상세보기");
         break;
       default:
         break;
