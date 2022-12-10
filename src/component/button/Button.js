@@ -65,8 +65,13 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
     alert(1);
   };
   //댓글 수정
-  const CommentToggle = () => {
-    alert(1);
+  const CommentRetouchOpen = () => {
+    setState(!getState);
+  };
+  //댓글 수정완료
+  const CommentRetouch = () => {
+    alert(2);
+    setState(!getState);
   };
   //Todo 삭제하기
   const DeleteTodo = () => {
@@ -102,8 +107,11 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "CommentDelete":
         CommentDelete();
         break;
-      case "CommentToggle":
-        CommentToggle();
+      case "CommentRetouchOpen":
+        CommentRetouchOpen();
+        break;
+      case "CommentRetouch":
+        CommentRetouch();
         break;
       case "todoSubmit":
         todoSubmit();
@@ -149,8 +157,14 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "CommentAdd":
         setBtnName("코멘트 추가하기");
         break;
-      case "CommentDelete":
+      case "CommentInDelete":
         setBtnName("코멘트 삭제하기");
+        break;
+      case "CommentRetouchOpen":
+        setBtnName("코멘트 수정하기");
+        break;
+      case "CommentRetouch":
+        setBtnName("수정완료");
         break;
       case "DeleteTodo":
         setBtnName("삭제하기");
