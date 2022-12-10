@@ -32,10 +32,17 @@ const todoSlice = createSlice({
     listAdd: (state, action) => {
       state.Todo = [...state.Todo, action.payload];
     },
+    retouchComment: (state, action) => {
+      return state.Comment.map((comment) =>
+        comment.commentId === action.payload.id
+          ? { ...comment, commentdesc: action.payload.desc }
+          : comment
+      );
+    },
   },
 });
 
 // 액션크리에이터는 컴포넌트에서 사용하기 위해 export 하고
-export const { listAdd } = todoSlice.actions;
+export const { listAdd, retouchComment } = todoSlice.actions;
 // reducer 는 configStore에 등록하기 위해 export default 합니다.
 export default todoSlice.reducer;
