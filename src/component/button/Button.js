@@ -1,80 +1,68 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-const ButtonComponent = ({ getState, setState, value }) => {
+const ButtonComponent = ({ boxOpen, setBoxOpen, value }) => {
   const navigate = useNavigate();
   //리스트 추가 컴포넌트 활성화 여부
   const ActiveAddBox = () => {
-    setState(!getState);
+    setBoxOpen(!boxOpen);
   };
-  //리스트 submit
-  const todoSubmit = () => {
-    const [title, desc] = getState;
-    const [setTitle, setDesc, setInputError] = setState;
-
-    if (title.trim() === '') {
-      setInputError('제목을 입력해 주세요.');
-    } else if (desc.trim() === '') {
-      setInputError('내용을 입력해 주세요.');
-    } else {
-      //submit 실행
-      console.log('submit');
-      // input의 제목, 내용 초기화
-      setTitle('');
-      setDesc('');
-    }
-  };
-
   const GoBackPage = () => {
-    navigate('/');
+    navigate("/");
   };
-
-  //댓글 추가
   const CommentAdd = () => {
-    const [nickname, comment] = getState;
-    const [setNickname, setComment] = setState;
-    if (!nickname) {
-      alert('닉네임을 입력해주세요.');
-    } else if (!comment) {
-      alert('댓글을 입력해주세요.');
-    } else {
-      console.log(nickname, ',', comment);
-      setNickname('');
-      setComment('');
-    }
+    alert(1);
   };
-  //댓글 삭제
   const CommentDelete = () => {
     alert(1);
   };
-  //댓글 수정
   const CommentToggle = () => {
     alert(1);
   };
+  const DeleteTodo = () => {
+    alert(1);
+  };
+  const DoneTodo = () => {
+    alert(1);
+  };
+  const ShiftTodo = () => {
+    alert(1);
+  };
+  const DetailTodo = () => {
+    navigate("/list");
+  };
 
-  const [btnName, setBtnName] = useState('');
+  const [btnName, setBtnName] = useState("");
 
-  //버튼 onclick 시에 적용할 함수
   const btnBunc = () => {
     switch (value) {
-      case 'ActiveAddBox':
+      case "ActiveAddBox":
         ActiveAddBox();
         break;
-      case 'BackPage':
+      case "BackPage":
         GoBackPage();
         break;
-      case 'CommentAdd':
+      case "CommentAdd":
         CommentAdd();
         break;
-      case 'CommentDelete':
+      case "CommentDelete":
         CommentDelete();
         break;
-      case 'CommentToggle':
+      case "CommentToggle":
         CommentToggle();
         break;
-      case 'todoSubmit':
-        todoSubmit();
+      case "DeleteTodo":
+        DeleteTodo();
+        break;
+      case "DoneTodo":
+        DoneTodo();
+        break;
+      case "ShiftTodo":
+        ShiftTodo();
+        break;
+      case "DetailTodo":
+        DetailTodo();
         break;
       default:
         break;
@@ -82,36 +70,41 @@ const ButtonComponent = ({ getState, setState, value }) => {
   };
 
   useEffect(() => {
-    // 버튼 이름
     switch (value) {
-      case 'ActiveAddBox':
-        setBtnName('리스트 추가하기');
+      case "ActiveAddBox":
+        setBtnName("리스트 추가하기");
         break;
-      case 'todoSubmit':
-        setBtnName('추가하기');
+      case "BackPage":
+        setBtnName("뒤로가기");
         break;
-      case 'BackPage':
-        setBtnName('뒤로가기');
+      case "DeleteDetail":
+        setBtnName("수정하기");
         break;
-      case 'DeleteDetail':
-        setBtnName('수정하기');
+      case "EditDetail":
+        setBtnName("삭제하기");
         break;
-      case 'EditDetail':
-        setBtnName('삭제하기');
+      case "CommentAdd":
+        setBtnName("코멘트 추가하기");
         break;
-      case 'CommentAdd':
-        setBtnName('코멘트 추가하기');
+      case "CommentDelete":
+        setBtnName("코멘트 삭제하기");
         break;
-      case 'CommentDelete':
-        setBtnName('코멘트 삭제하기');
+      case "DeleteTodo":
+        setBtnName("삭제하기");
         break;
-      case 'CommentToggle':
-        setBtnName('코멘트 수정하기');
+      case "DoneTodo":
+        setBtnName("완료");
+        break;
+      case "ShiftTodo":
+        setBtnName("취소하기");
+        break;
+      case "DetailTodo":
+        setBtnName("상세보기");
         break;
       default:
         break;
     }
-  }, [value]);
+  }, []);
 
   return <StyledButton onClick={btnBunc}>{btnName}</StyledButton>;
 };
