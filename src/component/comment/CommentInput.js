@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import ButtonComponent from '../button/Button';
+import { useState } from "react";
+import styled from "styled-components";
+import ButtonComponent from "../button/Button";
 
 const CommentInputComponent = () => {
-  const [nickname, setNickname] = useState('');
-  const [comment, setComment] = useState('');
+  const [nickname, setNickname] = useState("");
+  const [comment, setComment] = useState("");
 
   const nickWrite = ({ target: { value } }) => {
     setNickname(value);

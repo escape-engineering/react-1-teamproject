@@ -37,9 +37,13 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       setDesc("");
     }
   };
-
+  //뒤로가기
   const GoBackPage = () => {
     navigate("/");
+  };
+  //리스트삭제
+  const DelInDetail = () => {
+    window.confirm("정말삭제할려고!?") ? alert("삭제 ㅠㅠ") : alert("살았다!");
   };
 
   //댓글 추가
@@ -88,6 +92,9 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "todoSubmit":
         todoSubmit();
         break;
+      case "DelInDetail":
+        DelInDetail();
+        break;
       default:
         break;
     }
@@ -105,11 +112,11 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "BackPage":
         setBtnName("뒤로가기");
         break;
-      case "DeleteDetail":
-        setBtnName("수정하기");
+      case "DelInDetail":
+        setBtnName("삭제하기");
         break;
       case "EditDetail":
-        setBtnName("삭제하기");
+        setBtnName("수정하기");
         break;
       case "CommentAdd":
         setBtnName("코멘트 추가하기");
