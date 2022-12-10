@@ -1,4 +1,4 @@
-import FormComponent from "../component/form/Form";
+import FormComponent from '../component/form/Form';
 
 const MainPage = () => {
   return (
