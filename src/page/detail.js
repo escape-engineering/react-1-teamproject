@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import CommentInputComponent from "../component/comment/CommentInput";
-import Comment from "../component/comment/Comment";
-import Detailcomponent from "../component/detail/Detailindex";
+import styled from 'styled-components';
+import CommentInputComponent from '../component/comment/CommentInput';
+import Comment from '../component/comment/Comment';
+import Detailcomponent from '../component/detail/Detailindex';
 
 const DetailPage = () => {
   return (
@@ -11,6 +11,12 @@ const DetailPage = () => {
 
       {/* 상국님 */}
       <CommentInputComponent />
+      <Comment />
+      <Comment />
+      <Comment />
+      <Comment />
+      <Comment />
+      <Comment />
       <Comment />
     </div>
   );
