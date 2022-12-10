@@ -68,6 +68,7 @@ const FormComponent = () => {
         </ListAddBox>
         <TodoAddExplainWrap>
           <li>제목은 15자 이하로 작성하여 주세요.</li>
+          <li>내용은 200자 이하로 작성하여 주세요.</li>
         </TodoAddExplainWrap>
       </ActiveWrap>
     </Wrap>

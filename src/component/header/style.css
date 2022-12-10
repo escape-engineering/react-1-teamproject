@@ -1,16 +1,16 @@
 header {
   width: 100%;
   height: 70px;
-  position: relative;
   margin-bottom: 50px;
 }
 .headerWrap {
-  position: absolute;
-  left: 0;
+  position: fixed;
+  left: 50%;
   top: 0;
-  width: 100%;
+  transform: translateX(-50%);
+  width: 1200px;
   height: 70px;
-  background-color: rgb(171, 246, 194);
+  background-color: rgba(163, 235, 182, 0.648);
   border-radius: 0 0 10px 10px;
   display: flex;
   align-items: center;
