@@ -1,13 +1,6 @@
 import "./style.css";
 
 const Header = () => {
-  return (
-    <header>
-      <div className="headerWrap">
-        <div>todo list project</div>
-      </div>
-      <div className="headerSpace"></div>
-    </header>
-  );
+  return <header className="headerWrap">todo list project</header>;
 };
 export default Header;

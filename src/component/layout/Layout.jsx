@@ -13,6 +13,7 @@ const Layout = ({ children }) => {
 const Wrap = styled.div`
   width: 1200px;
   margin: 0 auto;
+  padding-top: 120px;
 `;
 
 export default Layout;
