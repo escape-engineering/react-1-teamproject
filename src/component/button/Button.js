@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { useDispatch } from 'react-redux';
-import { listAdd } from '../../redux/modules/todolist';
+import { useDispatch } from "react-redux";
+import { listAdd } from "../../redux/modules/todolist";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const ButtonComponent = ({ getState, setState, coLor, value }) => {
   const navigate = useNavigate();
@@ -19,10 +19,10 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
     const [title, desc] = getState;
     const [setTitle, setDesc, setInputError] = setState;
 
-    if (title.trim() === '') {
-      setInputError('제목을 입력해 주세요.');
-    } else if (desc.trim() === '') {
-      setInputError('내용을 입력해 주세요.');
+    if (title.trim() === "") {
+      setInputError("제목을 입력해 주세요.");
+    } else if (desc.trim() === "") {
+      setInputError("내용을 입력해 주세요.");
     } else {
       //submit 실행
       const newTodo = {
@@ -33,17 +33,17 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       };
       dispatch(listAdd(newTodo));
       // input의 제목, 내용 초기화
-      setTitle('');
-      setDesc('');
+      setTitle("");
+      setDesc("");
     }
   };
   //뒤로가기
   const GoBackPage = () => {
-    navigate('/');
+    navigate("/");
   };
   //리스트삭제
   const DelInDetail = () => {
-    window.confirm('정말삭제할려고!?') ? alert('삭제 ㅠㅠ') : alert('살았다!');
+    window.confirm("정말삭제할려고!?") ? alert("삭제 ㅠㅠ") : alert("살았다!");
   };
 
   //댓글 추가
@@ -51,13 +51,13 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
     const [nickname, comment] = getState;
     const [setNickname, setComment] = setState;
     if (!nickname) {
-      alert('닉네임을 입력해주세요.');
+      alert("닉네임을 입력해주세요.");
     } else if (!comment) {
-      alert('댓글을 입력해주세요.');
+      alert("댓글을 입력해주세요.");
     } else {
-      console.log(nickname, ',', comment);
-      setNickname('');
-      setComment('');
+      console.log(nickname, ",", comment);
+      setNickname("");
+      setComment("");
     }
   };
   //댓글 삭제
@@ -87,48 +87,48 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   };
   // Todo 상세보기
   const DetailTodo = () => {
-    navigate('/list');
+    navigate("/list");
   };
 
-  const [btnName, setBtnName] = useState('');
+  const [btnName, setBtnName] = useState("");
 
   //버튼 onclick 시에 적용할 함수
   const btnBunc = () => {
     switch (value) {
-      case 'ActiveAddBox':
+      case "ActiveAddBox":
         ActiveAddBox();
         break;
-      case 'BackPage':
+      case "BackPage":
         GoBackPage();
         break;
-      case 'CommentAdd':
+      case "CommentAdd":
         CommentAdd();
         break;
-      case 'CommentDelete':
+      case "CommentDelete":
         CommentDelete();
         break;
-      case 'CommentRetouchOpen':
+      case "CommentRetouchOpen":
         CommentRetouchOpen();
         break;
-      case 'CommentRetouch':
+      case "CommentRetouch":
         CommentRetouch();
         break;
-      case 'todoSubmit':
+      case "todoSubmit":
         todoSubmit();
         break;
-      case 'DelInDetail':
+      case "DelInDetail":
         DelInDetail();
         break;
-      case 'DeleteTodo':
+      case "DeleteTodo":
         DeleteTodo();
         break;
-      case 'DoneTodo':
+      case "DoneTodo":
         DoneTodo();
         break;
-      case 'ShiftTodo':
+      case "ShiftTodo":
         ShiftTodo();
         break;
-      case 'DetailTodo':
+      case "DetailTodo":
         DetailTodo();
         break;
       default:
@@ -139,44 +139,44 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   useEffect(() => {
     // 버튼 이름
     switch (value) {
-      case 'ActiveAddBox':
-        setBtnName('리스트 추가하기');
+      case "ActiveAddBox":
+        setBtnName("리스트 추가하기");
         break;
-      case 'todoSubmit':
-        setBtnName('추가하기');
+      case "todoSubmit":
+        setBtnName("추가하기");
         break;
-      case 'BackPage':
-        setBtnName('뒤로가기');
+      case "BackPage":
+        setBtnName("뒤로가기");
         break;
-      case 'DelInDetail':
-        setBtnName('삭제하기');
+      case "DelInDetail":
+        setBtnName("삭제하기");
         break;
-      case 'EditDetail':
-        setBtnName('수정하기');
+      case "EditInDetail":
+        setBtnName("수정하기");
         break;
-      case 'CommentAdd':
-        setBtnName('코멘트 추가하기');
+      case "CommentAdd":
+        setBtnName("코멘트 추가하기");
         break;
-      case 'CommentDelete':
-        setBtnName('코멘트 삭제하기');
+      case "CommentInDelete":
+        setBtnName("코멘트 삭제하기");
         break;
-      case 'CommentRetouchOpen':
-        setBtnName('코멘트 수정하기');
+      case "CommentRetouchOpen":
+        setBtnName("코멘트 수정하기");
         break;
-      case 'CommentRetouch':
-        setBtnName('수정완료');
+      case "CommentRetouch":
+        setBtnName("수정완료");
         break;
-      case 'DeleteTodo':
-        setBtnName('삭제하기');
+      case "DeleteTodo":
+        setBtnName("삭제하기");
         break;
-      case 'DoneTodo':
-        setBtnName('완료하기');
+      case "DoneTodo":
+        setBtnName("완료하기");
         break;
-      case 'ShiftTodo':
-        setBtnName('취소하기');
+      case "ShiftTodo":
+        setBtnName("취소하기");
         break;
-      case 'DetailTodo':
-        setBtnName('상세보기');
+      case "DetailTodo":
+        setBtnName("상세보기");
         break;
       default:
         break;
@@ -194,7 +194,7 @@ const StyledButton = styled.button`
   width: 100%;
   height: 100%;
   background-color: ${({ btnCoLor }) =>
-    btnCoLor === 'red' ? 'rgb(231, 181, 181)' : 'rgb(191, 178, 225)'};
+    btnCoLor === "red" ? "rgb(231, 181, 181)" : "rgb(191, 178, 225)"};
   border: none;
   font-weight: bold;
   color: white;
@@ -202,7 +202,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   &:hover {
     background-color: ${({ btnCoLor }) =>
-      btnCoLor === 'red' ? 'rgb(178, 84, 84)' : 'rgb(122, 98, 184)'};
+      btnCoLor === "red" ? "rgb(178, 84, 84)" : "rgb(122, 98, 184)"};
   }
 `;
 

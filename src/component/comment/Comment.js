@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import ButtonComponent from '../button/Button';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import styled from "styled-components";
+import ButtonComponent from "../button/Button";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Comment = () => {
   const [commentOpen, setCommentOpen] = useState(true);
@@ -22,7 +22,7 @@ const Comment = () => {
                     setState={setCommentOpen}
                     value="CommentRetouchOpen"
                   />
-                  <ButtonComponent value="CommentDelete" coLor="red" />
+                  <ButtonComponent value="CommentInDelete" coLor="red" />
                 </ButtonWrap>
               </ButtonWrapWrap>
             </CommentWrap>
@@ -52,7 +52,7 @@ const RetouchCommentWrap = styled.div`
   height: 100%;
   padding: 10px;
   border-bottom: 1px solid green;
-  display: ${({ isOpen }) => (isOpen ? 'none' : 'block')};
+  display: ${({ isOpen }) => (isOpen ? "none" : "block")};
 `;
 
 const RetouchInput = styled.input`
@@ -79,7 +79,7 @@ const CommentWrap = styled.div`
   height: 100%;
   padding: 10px;
   border-bottom: 1px solid green;
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
 `;
 
 const ButtonWrap = styled.div`
