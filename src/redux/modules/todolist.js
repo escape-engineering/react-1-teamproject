@@ -1,13 +1,11 @@
-// src/redux/modules/counterSlice.js
-
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   Todo: [
     {
       TodoId: 1,
-      title: '숨쉬기',
-      desc: '숨을 쉬어 봅시다',
+      title: "숨쉬기",
+      desc: "숨을 쉬어 봅시다",
       isDone: false,
     },
   ],
@@ -15,20 +13,20 @@ const initialState = {
     {
       commentId: 1,
       createdAt: 1,
-      nickname: '전상국',
-      commentdesc: '숨이 잘 쉬어져요',
+      nickname: "전상국",
+      commentdesc: "숨이 잘 쉬어져요",
     },
     {
       commentId: 2,
       createdAt: 1,
-      nickname: '이재정',
-      commentdesc: '숨 잘 쉬고갑니다',
+      nickname: "이재정",
+      commentdesc: "숨 잘 쉬고갑니다",
     },
   ],
 };
 
 const todoSlice = createSlice({
-  name: 'todolist',
+  name: "todolist",
   initialState,
   reducers: {
     listAdd: (state, action) => {

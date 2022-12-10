@@ -6,37 +6,48 @@ import { listAdd } from "../../redux/modules/todolist";
 import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
+import axios from "axios";
 
 const ButtonComponent = ({ getState, setState, coLor, value }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   //리스트 추가 컴포넌트 활성화 여부
   const ActiveAddBox = () => {
     setState(!getState);
   };
+
   //리스트 submit
   const todoSubmit = () => {
-    const [title, desc] = getState;
-    const [setTitle, setDesc, setInputError] = setState;
+    try {
+      const [title, desc] = getState;
+      const [setTitle, setDesc, setInputError] = setState;
 
-    if (title.trim() === "") {
-      setInputError("제목을 입력해 주세요.");
-    } else if (desc.trim() === "") {
-      setInputError("내용을 입력해 주세요.");
-    } else {
-      //submit 실행
-      const newTodo = {
-        TodoId: Date.now(),
-        title: title,
-        desc: desc,
-        isDone: false,
-      };
-      dispatch(listAdd(newTodo));
-      // input의 제목, 내용 초기화
-      setTitle("");
-      setDesc("");
+      if (title.trim() === "") {
+        setInputError("제목을 입력해 주세요.");
+      } else if (desc.trim() === "") {
+        setInputError("내용을 입력해 주세요.");
+      } else {
+        //새로운 todo 생성
+        const newTodo = {
+          id: Date.now(),
+          title: title,
+          desc: desc,
+          isDone: false,
+          comments: [],
+        };
+        //api
+        axios.post(`http://localhost:3001/Todo`, newTodo);
+        dispatch(listAdd(newTodo));
+        // input의 제목, 내용 초기화
+        setTitle("");
+        setDesc("");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
+
   //뒤로가기
   const GoBackPage = () => {
     navigate("/");
