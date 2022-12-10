@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
+
+import { useDispatch } from "react-redux";
+import { listAdd } from "../../redux/modules/todolist";
+
 import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 
 const ButtonComponent = ({ getState, setState, coLor, value }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   //리스트 추가 컴포넌트 활성화 여부
   const ActiveAddBox = () => {
     setState(!getState);
@@ -19,7 +25,13 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       setInputError("내용을 입력해 주세요.");
     } else {
       //submit 실행
-      console.log("submit");
+      const newTodo = {
+        TodoId: Date.now(),
+        title: title,
+        desc: desc,
+        isDone: false,
+      };
+      dispatch(listAdd(newTodo));
       // input의 제목, 내용 초기화
       setTitle("");
       setDesc("");
