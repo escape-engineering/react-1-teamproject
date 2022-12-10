@@ -20,8 +20,8 @@ const Detailcomponent = () => {
         </TextBox>
 
         <ButtonBox2>
-          <ButtonComponent value="DeleteDetail" />
           <ButtonComponent value="EditDetail" />
+          <ButtonComponent value="DelInDetail" />
         </ButtonBox2>
       </Detailbox>
     </div>
@@ -31,7 +31,7 @@ const Detailbox = styled.div`
   width: 800px;
   max-width: 1200px;
   min-width: 800px;
-  height: 330px;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
   border: 3px solid rgb(171, 246, 200);

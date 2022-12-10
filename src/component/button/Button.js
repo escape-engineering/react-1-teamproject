@@ -37,9 +37,13 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       setDesc("");
     }
   };
-
+  //뒤로가기
   const GoBackPage = () => {
     navigate("/");
+  };
+  //리스트삭제
+  const DelInDetail = () => {
+    window.confirm("정말삭제할려고!?") ? alert("삭제 ㅠㅠ") : alert("살았다!");
   };
 
   //댓글 추가
@@ -63,6 +67,22 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   //댓글 수정
   const CommentToggle = () => {
     alert(1);
+  };
+  //Todo 삭제하기
+  const DeleteTodo = () => {
+    alert(1);
+  };
+  // Todo 완료하기
+  const DoneTodo = () => {
+    alert(1);
+  };
+  // Todo 취소하기
+  const ShiftTodo = () => {
+    alert(1);
+  };
+  // Todo 상세보기
+  const DetailTodo = () => {
+    navigate("/list");
   };
 
   const [btnName, setBtnName] = useState("");
@@ -88,6 +108,21 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "todoSubmit":
         todoSubmit();
         break;
+      case "DelInDetail":
+        DelInDetail();
+        break;
+      case "DeleteTodo":
+        DeleteTodo();
+        break;
+      case "DoneTodo":
+        DoneTodo();
+        break;
+      case "ShiftTodo":
+        ShiftTodo();
+        break;
+      case "DetailTodo":
+        DetailTodo();
+        break;
       default:
         break;
     }
@@ -105,11 +140,11 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "BackPage":
         setBtnName("뒤로가기");
         break;
-      case "DeleteDetail":
-        setBtnName("수정하기");
+      case "DelInDetail":
+        setBtnName("삭제하기");
         break;
       case "EditDetail":
-        setBtnName("삭제하기");
+        setBtnName("수정하기");
         break;
       case "CommentAdd":
         setBtnName("코멘트 추가하기");
@@ -117,8 +152,17 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "CommentDelete":
         setBtnName("코멘트 삭제하기");
         break;
-      case "CommentToggle":
-        setBtnName("코멘트 수정하기");
+      case "DeleteTodo":
+        setBtnName("삭제하기");
+        break;
+      case "DoneTodo":
+        setBtnName("완료하기");
+        break;
+      case "ShiftTodo":
+        setBtnName("취소하기");
+        break;
+      case "DetailTodo":
+        setBtnName("상세보기");
         break;
       default:
         break;
