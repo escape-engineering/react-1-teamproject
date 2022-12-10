@@ -11,12 +11,6 @@ const DetailPage = () => {
       {/* 상국님 */}
       <CommentInputComponent />
       <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
     </div>
   );
 };

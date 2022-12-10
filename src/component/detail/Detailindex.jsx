@@ -20,7 +20,7 @@ const Detailcomponent = () => {
         </TextBox>
 
         <ButtonBox2>
-          <ButtonComponent value="EditDetail" />
+          <ButtonComponent value="EditInDetail" />
           <ButtonComponent value="DelInDetail" />
         </ButtonBox2>
       </Detailbox>
