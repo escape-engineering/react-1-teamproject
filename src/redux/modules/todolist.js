@@ -1,5 +1,3 @@
-// src/redux/modules/counterSlice.js
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

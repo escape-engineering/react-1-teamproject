@@ -13,6 +13,7 @@ const FormComponent = () => {
   const [desc, setDesc] = useState("");
 
   const [inputError, setInputError] = useState("");
+
   const list = useSelector((state) => state.todolist.Todo);
 
   //타이틀 작성
