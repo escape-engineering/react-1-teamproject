@@ -85,7 +85,7 @@ const ActiveWrap = styled.div`
 const ListAddBox = styled.div`
   padding: 20px;
   width: 320px;
-  background-color: #d9b5ed;
+  background-color: #ccefcc;
   border-radius: 10px;
   position: relative;
   display: flex;
