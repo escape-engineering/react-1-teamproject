@@ -1,20 +1,35 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import ButtonComponent from '../button/Button';
 
 const CommentInputComponent = () => {
+  const [nickname, setNickname] = useState('');
+  const [comment, setComment] = useState('');
+
+  const nickWrite = ({ target: { value } }) => {
+    setNickname(value);
+  };
+  const commentWrite = ({ target: { value } }) => {
+    setComment(value);
+  };
+
   return (
     <Wrap>
       <NickWrap>
         <h4>이름</h4>
-        <NickInput />
+        <NickInput type="text" value={nickname} onChange={nickWrite} />
       </NickWrap>
       <CommentWrap>
         <h4>코멘트</h4>
-        <CommentInput />
+        <CommentInput type="text" value={comment} onChange={commentWrite} />
       </CommentWrap>
       <ButtonWrapWrap>
         <ButtonWrap>
-          <ButtonComponent value="CommentAdd" />
+          <ButtonComponent
+            getState={[nickname, comment]}
+            setState={[setNickname, setComment]}
+            value="CommentAdd"
+          />
         </ButtonWrap>
       </ButtonWrapWrap>
     </Wrap>
@@ -38,7 +53,6 @@ const ButtonWrapWrap = styled.div`
 const ButtonWrap = styled.div`
   width: 125px;
   height: 40px;
-  background-color: blue;
 `;
 
 const NickWrap = styled.div``;
