@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import ButtonComponent from "../button/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./style.css";
+
+import { useSelector } from "react-redux";
 
 const FormComponent = () => {
   const [boxOpen, setBoxOpen] = useState(false);
@@ -11,6 +13,7 @@ const FormComponent = () => {
   const [desc, setDesc] = useState("");
 
   const [inputError, setInputError] = useState("");
+  const list = useSelector((state) => state.todolist.Todo);
 
   //타이틀 작성
   const titleWrite = ({ target: { value } }) => {
@@ -26,6 +29,9 @@ const FormComponent = () => {
     setInputError("");
   };
 
+  useEffect(() => {
+    console.log(list);
+  }, [list]);
   return (
     <Wrap>
       <div className="Active_btn_wrap">
