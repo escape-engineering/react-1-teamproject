@@ -85,7 +85,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   };
   //Todo 삭제하기
   const DeleteTodo = () => {
-    alert(1);
+    dispatch();
   };
   // Todo 완료하기
   const DoneTodo = () => {
@@ -96,8 +96,8 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
     alert(1);
   };
   // Todo 상세보기
-  const DetailTodo = () => {
-    navigate("/list");
+  const DetailTodo = (id) => {
+    navigate(getState);
   };
 
   const [btnName, setBtnName] = useState("");
@@ -139,7 +139,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
         ShiftTodo();
         break;
       case "DetailTodo":
-        DetailTodo();
+        DetailTodo(getState);
         break;
       default:
         break;

@@ -24,11 +24,11 @@ const FormComponent = () => {
   };
 
   //todo 목록 확인
-  // const { Todo, isloading, error } = useSelector((state) => state.todolist);
+  const { Todo, isloading, error } = useSelector((state) => state.todolist);
   useEffect(() => {
     dispatch(__getTodos());
   }, [dispatch]);
-  // console.log(Todo);
+  console.log(Todo);
   return (
     <Wrap>
       <div className="Active_btn_wrap">
