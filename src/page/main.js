@@ -2,41 +2,66 @@ import FormComponent from "../component/form/Form";
 import styled from "styled-components";
 import ButtonComponent from "../component/button/Button";
 import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { __getTodos } from "../redux/modules/todolist";
 
 const MainPage = () => {
+  const dispatch = useDispatch();
+  const { Todo, isloading, error } = useSelector((state) => state.todolist);
+  useEffect(() => {
+    dispatch(__getTodos());
+  }, [dispatch]);
+
   return (
     <div>
       {/* 재정 */}
       <FormComponent />
 
       {/* 진아님 */}
-      <div>todoList</div>
       <div className="list-container">
         <div className="under-title">Working</div>
-        <div className="todo-container">
-          <div className="todo-title">이곳은 제목입니다</div>
-          <div className="todo-body">이곳은 내용입니다</div>
-          <div className="button-set">
-            <ButtonBox3>
-              <ButtonComponent value="DeleteTodo" />
-              <ButtonComponent value="DoneTodo" />
-              <ButtonComponent value="DetailTodo" />
-            </ButtonBox3>
-          </div>
+        <div className="list-wrapper">
+          {Todo.map((list) =>
+            list.isDone === false ? (
+              <div className="todo-container">
+                <div className="todo-title">{list.title}</div>
+                <div className="todo-body">{list.desc}</div>
+                <div className="button-set">
+                  <ButtonBox3>
+                    <ButtonComponent value="DeleteTodo" getState={list.id} />
+                    <ButtonComponent value="DoneTodo" getState={list.id} />
+                    <ButtonComponent
+                      value="DetailTodo"
+                      getState={`/list/${list.id}`}
+                    />
+                  </ButtonBox3>
+                </div>
+              </div>
+            ) : null
+          )}
         </div>
+
         <div className="under-title">Done</div>
         <div className="list-wrapper">
-          <div className="todo-container">
-            <div className="todo-title">이곳은 제목입니다</div>
-            <div className="todo-body">이곳은 내용입니다</div>
-            <div className="button-set">
-              <ButtonBox3>
-                <ButtonComponent value="DeleteTodo" />
-                <ButtonComponent value="ShiftTodo" />
-                <ButtonComponent value="DetailTodo" />
-              </ButtonBox3>
-            </div>
-          </div>
+          {Todo.map((list) =>
+            list.isDone === true ? (
+              <div className="todo-container">
+                <div className="todo-title">{list.title}</div>
+                <div className="todo-body">{list.desc}</div>
+                <div className="button-set">
+                  <ButtonBox3>
+                    <ButtonComponent value="DeleteTodo" getState={list.id} />
+                    <ButtonComponent value="DoneTodo" getState={list.id} />
+                    <ButtonComponent
+                      value="DetailTodo"
+                      getState={`/list/${list.id}`}
+                    />
+                  </ButtonBox3>
+                </div>
+              </div>
+            ) : null
+          )}
         </div>
       </div>
     </div>
