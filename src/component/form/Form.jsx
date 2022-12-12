@@ -1,31 +1,34 @@
 import styled from "styled-components";
 import ButtonComponent from "../button/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
+import { __getTodos } from "../../redux/modules/todolist";
+import useInput from "../../hooks/useInput";
 
 const FormComponent = () => {
+  const dispatch = useDispatch();
   const [boxOpen, setBoxOpen] = useState(false);
-
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
 
   const [inputError, setInputError] = useState("");
 
   //타이틀 작성
-  const titleWrite = ({ target: { value } }) => {
-    setTitle(value);
-  };
+  const [title, onchangeTitleHandler, resetTitle] = useInput();
   // 내용 작성
-  const descWrite = ({ target: { value } }) => {
-    setDesc(value);
-  };
+  const [desc, onchangedescHandler, resetDesc] = useInput();
 
   //에러 메세지 삭제
   const removeError = () => {
     setInputError("");
   };
 
+  //todo 목록 확인
+  // const { Todo, isloading, error } = useSelector((state) => state.todolist);
+  useEffect(() => {
+    dispatch(__getTodos());
+  }, [dispatch]);
+  // console.log(Todo);
   return (
     <Wrap>
       <div className="Active_btn_wrap">
@@ -43,7 +46,7 @@ const FormComponent = () => {
               id="listAddtitle"
               type="text"
               value={title}
-              onChange={titleWrite}
+              onChange={onchangeTitleHandler}
               onFocus={removeError}
             />
           </div>
@@ -53,7 +56,7 @@ const FormComponent = () => {
               id="listAddDesc"
               type="text"
               value={desc}
-              onChange={descWrite}
+              onChange={onchangedescHandler}
               onFocus={removeError}
             ></textarea>
           </div>
@@ -61,7 +64,7 @@ const FormComponent = () => {
           <div className="submit_btn_wrap">
             <ButtonComponent
               getState={[title, desc]}
-              setState={[setTitle, setDesc, setInputError]}
+              setState={[resetTitle, resetDesc, setInputError]}
               value="todoSubmit"
             />
           </div>

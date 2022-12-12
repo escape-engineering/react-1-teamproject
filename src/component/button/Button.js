@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useDispatch } from "react-redux";
-import { listAdd } from "../../redux/modules/todolist";
+import { __postTodos } from "../../redux/modules/todolist";
 
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   const todoSubmit = () => {
     try {
       const [title, desc] = getState;
-      const [setTitle, setDesc, setInputError] = setState;
+      const [resetTitle, resetDesc, setInputError] = setState;
 
       if (title.trim() === "") {
         setInputError("제목을 입력해 주세요.");
@@ -37,11 +37,10 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
           comments: [],
         };
         //api
-        axios.post(`http://localhost:3001/Todo`, newTodo);
-        dispatch(listAdd(newTodo));
+        dispatch(__postTodos(newTodo));
         // input의 제목, 내용 초기화
-        setTitle("");
-        setDesc("");
+        resetTitle();
+        resetDesc();
       }
     } catch (err) {
       console.log(err);

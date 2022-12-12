@@ -1,37 +1,44 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
+//초기값
 const initialState = {
-  Todo: [
-    {
-      TodoId: 1,
-      title: "숨쉬기",
-      desc: "숨을 쉬어 봅시다",
-      isDone: false,
-    },
-  ],
-  Comment: [
-    {
-      commentId: 1,
-      createdAt: 1,
-      nickname: "전상국",
-      commentdesc: "숨이 잘 쉬어져요",
-    },
-    {
-      commentId: 2,
-      createdAt: 1,
-      nickname: "이재정",
-      commentdesc: "숨 잘 쉬고갑니다",
-    },
-  ],
+  Todo: [],
+  isLoading: false,
+  error: null,
 };
 
+//thunk
+export const __getTodos = createAsyncThunk(
+  "getTodos",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.get("http://localhost:3001/Todo");
+      return thunkAPI.fulfillWithValue(data);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+export const __postTodos = createAsyncThunk(
+  "postTodos",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.post("http://localhost:3001/Todo", payload);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+//리듀서
 const todoSlice = createSlice({
   name: "todolist",
   initialState,
   reducers: {
-    listAdd: (state, action) => {
-      state.Todo = [...state.Todo, action.payload];
-    },
     retouchComment: (state, action) => {
       return state.Comment.map((comment) =>
         comment.commentId === action.payload.id
@@ -40,9 +47,45 @@ const todoSlice = createSlice({
       );
     },
   },
+  //thunk용 리듀서
+  extraReducers: (builder) => {
+    // ----------------------------------------------------------
+    builder
+      //__getTodo
+      // 로딩 시작
+      .addCase(__getTodos.pending, (state) => {
+        state.isLoading = true;
+      })
+      //로딩 완료. 성공 시
+      .addCase(__getTodos.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.Todo = action.payload;
+      })
+      //로딩 완료. 실패 시
+      .addCase(__getTodos.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      // -------------------------------------------------------------
+      //postTodo
+      // 로딩 시작
+      .addCase(__postTodos.pending, (state) => {
+        state.isLoading = true;
+      })
+      //로딩 완료. 성공 시
+      .addCase(__postTodos.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.Todo = [...state.Todo, action.payload];
+      })
+      //로딩 완료. 실패 시
+      .addCase(__postTodos.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
+  },
 });
 
 // 액션크리에이터는 컴포넌트에서 사용하기 위해 export 하고
-export const { listAdd, retouchComment } = todoSlice.actions;
+export const { retouchComment } = todoSlice.actions;
 // reducer 는 configStore에 등록하기 위해 export default 합니다.
 export default todoSlice.reducer;
