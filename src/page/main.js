@@ -8,7 +8,9 @@ import { __getTodos } from "../redux/modules/todolist";
 
 const MainPage = () => {
   const dispatch = useDispatch();
-  const { Todo, isloading, error } = useSelector((state) => state.todolist);
+  const { Todo, todoDesc, isloading, error } = useSelector(
+    (state) => state.todolist
+  );
   useEffect(() => {
     dispatch(__getTodos());
   }, [dispatch]);

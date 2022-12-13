@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useDispatch } from "react-redux";
-import { __postTodos } from "../../redux/modules/todolist";
+import { __deleteComment, __postTodos } from "../../redux/modules/todolist";
 
 import { useNavigate } from "react-router-dom";
 
@@ -73,7 +73,9 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   };
   //댓글 삭제
   const CommentDelete = () => {
-    alert(1);
+    const [id, commentLoad] = getState;
+    dispatch(__deleteComment(id));
+    setState(!commentLoad);
   };
   //댓글 수정
   const CommentRetouchOpen = () => {
@@ -115,7 +117,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "CommentAdd":
         CommentAdd();
         break;
-      case "CommentDelete":
+      case "CommentInDelete":
         CommentDelete();
         break;
       case "CommentRetouchOpen":
