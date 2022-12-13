@@ -5,6 +5,7 @@ import axios from "axios";
 const initialState = {
   Todo: [],
   todoDesc: {},
+  comments: [],
   isLoading: false,
   error: null,
 };
@@ -53,12 +54,38 @@ export const __postTodos = createAsyncThunk(
 
 // 본문 수정 하기
 
-// 댓글 조회하기
+// 리스트 토글
 
+// 댓글 조회하기
+export const __getComments = createAsyncThunk(
+  "getComments",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.get("http://localhost:3001/comments");
+      return thunkAPI.fulfillWithValue(data);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 // 댓글 추가 하기
 
 // 댓글 삭제 하기
-
+export const __deleteComment = createAsyncThunk(
+  "deleteComment",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:3001/comments/${payload}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 // 댓글 수정 하기
 
 //리듀서
@@ -78,7 +105,7 @@ const todoSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // ----------------------------------------------------------
-      //__getTodo
+      //본문 리스트 조회
       // 로딩 시작
       .addCase(__getTodos.pending, (state) => {
         state.isLoading = true;
@@ -94,7 +121,7 @@ const todoSlice = createSlice({
         state.error = action.payload;
       })
       // -------------------------------------------------------------
-      //__getTodosDesc
+      //본문 조회하기
       // 로딩 시작
       .addCase(__getTodosDesc.pending, (state) => {
         state.isLoading = true;
@@ -110,7 +137,7 @@ const todoSlice = createSlice({
         state.error = action.payload;
       })
       // -------------------------------------------------------------
-      //__postTodos
+      //본문 추가하기
       // 로딩 시작
       .addCase(__postTodos.pending, (state) => {
         state.isLoading = true;
@@ -124,7 +151,49 @@ const todoSlice = createSlice({
       .addCase(__postTodos.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      // -------------------------------------------------------------
+      // 본문 수정하기
+
+      // -------------------------------------------------------------
+      // 본문 삭제하기
+
+      // -------------------------------------------------------------
+      // 리스트 토글
+
+      // -------------------------------------------------------------
+      // 댓글 조회하기
+      // 로딩 시작
+      .addCase(__getComments.pending, (state) => {
+        state.isLoading = true;
+      })
+      //로딩 완료. 성공 시
+      .addCase(__getComments.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.comments = action.payload;
+      })
+      //로딩 완료. 실패 시
+      .addCase(__getComments.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      // -------------------------------------------------------------
+      // 댓글 삭제 하기
+      // 로딩 시작
+      .addCase(__deleteComment.pending, (state) => {
+        state.isLoading = true;
+      })
+      //로딩 완료. 성공 시
+      .addCase(__deleteComment.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      //로딩 완료. 실패 시
+      .addCase(__deleteComment.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
+    // -------------------------------------------------------------
+    // 댓글 수정 하기
   },
 });
 
