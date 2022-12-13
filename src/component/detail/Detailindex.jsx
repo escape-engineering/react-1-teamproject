@@ -1,20 +1,34 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { __getTodosDesc } from "../../redux/modules/todolist";
 import ButtonComponent from "../button/Button";
 
 const Detailcomponent = () => {
+  const params = useParams().id;
+  const dispatch = useDispatch();
+  const { Todo, todoDesc, isLoading, error } = useSelector(
+    (state) => state.todolist
+  );
+
+  useEffect(() => {
+    dispatch(__getTodosDesc(params));
+  }, [dispatch]);
   return (
     <div>
       {/* 학준님 */}
       <Detailbox>
         <DetailHeader>
-          <Pagenum>page num :1</Pagenum> <CommentNum>댓글: 20</CommentNum>
+          <Pagenum>page num :{todoDesc.id}</Pagenum>
+          <CommentNum>댓글: 20</CommentNum>
           <ButtonBox>
             <ButtonComponent value="BackPage" />
           </ButtonBox>
         </DetailHeader>
 
         <TextBox>
-          <h1>제목: </h1>
+          <h1>제목: {todoDesc.title}</h1>
           <h1>내용:</h1>
           <h3>상태: working </h3>
         </TextBox>

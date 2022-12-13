@@ -11,7 +11,7 @@ function Router() {
       <Layout>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/list" element={<DetailPage />} />
+          <Route path="/list/:id" element={<DetailPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>

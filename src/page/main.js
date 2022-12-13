@@ -12,7 +12,6 @@ const MainPage = () => {
   useEffect(() => {
     dispatch(__getTodos());
   }, [dispatch]);
-
   return (
     <div>
       {/* 재정 */}
@@ -24,7 +23,7 @@ const MainPage = () => {
         <div className="list-wrapper">
           {Todo.map((list) =>
             list.isDone === false ? (
-              <div className="todo-container">
+              <div className="todo-container" key={list.id}>
                 <div className="todo-title">{list.title}</div>
                 <div className="todo-body">{list.desc}</div>
                 <div className="button-set">
@@ -46,7 +45,7 @@ const MainPage = () => {
         <div className="list-wrapper">
           {Todo.map((list) =>
             list.isDone === true ? (
-              <div className="todo-container">
+              <div className="todo-container" key={list.id}>
                 <div className="todo-title">{list.title}</div>
                 <div className="todo-body">{list.desc}</div>
                 <div className="button-set">

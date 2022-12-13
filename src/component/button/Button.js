@@ -21,7 +21,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   const todoSubmit = () => {
     try {
       const [title, desc] = getState;
-      const [resetTitle, resetDesc, setInputError] = setState;
+      const [resetTitle, resetDesc, setInputError, setBoxOpen] = setState;
 
       if (title.trim() === "") {
         setInputError("제목을 입력해 주세요.");
@@ -41,6 +41,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
         // input의 제목, 내용 초기화
         resetTitle();
         resetDesc();
+        setBoxOpen(false);
       }
     } catch (err) {
       console.log(err);
