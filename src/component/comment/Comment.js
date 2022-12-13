@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ButtonComponent from "../button/Button";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __getTodosDesc } from "../../redux/modules/todolist";
+import { __getComments, __getTodosDesc } from "../../redux/modules/todolist";
 import { useParams } from "react-router-dom";
 
 const Comment = () => {
@@ -10,22 +10,31 @@ const Comment = () => {
   const dispatch = useDispatch();
 
   // params에 맞는 todo 소환
-  const { Todo, todoDesc, isloading, error } = useSelector(
+  const { Todo, todoDesc, comments, isLoading, error } = useSelector(
     (state) => state.todolist
   );
+
+  // 댓글의 loading이 완료되면 리렌더링하는 용도의 state
+  const [commentLoad, setCommentLoad] = useState(false);
+
+  //댓글 배열 소환
   useEffect(() => {
-    dispatch(__getTodosDesc(params));
-  }, [dispatch]);
+    dispatch(__getComments(params));
+  }, [dispatch, commentLoad]);
 
   const [commentOpen, setCommentOpen] = useState(true);
 
-  const todoComments = todoDesc.comments;
+  //댓글 배열에서 해당 todo에 대한 댓글만 나오도록 필터링
+  const todoComments = comments.filter(
+    (list) => list.postId === parseInt(params)
+  );
+
   return (
     <div>
-      {todoComments
+      {comments
         ? todoComments.map((comment) => {
             return (
-              <div key={comment.commentId}>
+              <div key={comment.id}>
                 <CommentWrap isOpen={commentOpen}>
                   <p>{comment.nickname}</p>
                   <p>{comment.commentdesc}</p>
@@ -36,7 +45,12 @@ const Comment = () => {
                         setState={setCommentOpen}
                         value="CommentRetouchOpen"
                       />
-                      <ButtonComponent value="CommentInDelete" coLor="red" />
+                      <ButtonComponent
+                        value="CommentInDelete"
+                        coLor="red"
+                        getState={[comment.id, commentLoad]}
+                        setState={setCommentLoad}
+                      />
                     </ButtonWrap>
                   </ButtonWrapWrap>
                 </CommentWrap>
