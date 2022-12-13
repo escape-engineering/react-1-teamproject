@@ -22,13 +22,8 @@ const FormComponent = () => {
   const removeError = () => {
     setInputError("");
   };
-
-  //todo 목록 확인
-  const { Todo, isloading, error } = useSelector((state) => state.todolist);
-  useEffect(() => {
-    dispatch(__getTodos());
-  }, [dispatch]);
-  console.log(Todo);
+  //박스가 닫히며 랜더링
+  useEffect(() => {}, [setBoxOpen]);
   return (
     <Wrap>
       <div className="Active_btn_wrap">
@@ -64,7 +59,7 @@ const FormComponent = () => {
           <div className="submit_btn_wrap">
             <ButtonComponent
               getState={[title, desc]}
-              setState={[resetTitle, resetDesc, setInputError]}
+              setState={[resetTitle, resetDesc, setInputError, setBoxOpen]}
               value="todoSubmit"
             />
           </div>

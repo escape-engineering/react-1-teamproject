@@ -1,48 +1,63 @@
 import styled from "styled-components";
 import ButtonComponent from "../button/Button";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { __getTodosDesc } from "../../redux/modules/todolist";
+import { useParams } from "react-router-dom";
 
 const Comment = () => {
+  const params = useParams().id;
+  const dispatch = useDispatch();
+
+  // params에 맞는 todo 소환
+  const { Todo, todoDesc, isloading, error } = useSelector(
+    (state) => state.todolist
+  );
+  useEffect(() => {
+    dispatch(__getTodosDesc(params));
+  }, [dispatch]);
+
   const [commentOpen, setCommentOpen] = useState(true);
-  const comments = useSelector((state) => state.todolist.Comment);
-  console.log(comments);
+
+  const todoComments = todoDesc.comments;
   return (
     <div>
-      {comments.map((comment) => {
-        return (
-          <div key={comment.commentId}>
-            <CommentWrap isOpen={commentOpen}>
-              <p>{comment.nickname}</p>
-              <p>{comment.commentdesc}</p>
-              <ButtonWrapWrap>
-                <ButtonWrap>
-                  <ButtonComponent
-                    getState={commentOpen}
-                    setState={setCommentOpen}
-                    value="CommentRetouchOpen"
-                  />
-                  <ButtonComponent value="CommentInDelete" coLor="red" />
-                </ButtonWrap>
-              </ButtonWrapWrap>
-            </CommentWrap>
-            <RetouchCommentWrap isOpen={commentOpen}>
-              <p>{comment.nickname}</p>
-              <p>comment</p>
-              <RetouchInput />
-              <RetouchButtonWrapWrap>
-                <RetouchButtonWrap>
-                  <ButtonComponent
-                    getState={commentOpen}
-                    setState={setCommentOpen}
-                    value="CommentRetouch"
-                  />
-                </RetouchButtonWrap>
-              </RetouchButtonWrapWrap>
-            </RetouchCommentWrap>
-          </div>
-        );
-      })}
+      {todoComments
+        ? todoComments.map((comment) => {
+            return (
+              <div key={comment.commentId}>
+                <CommentWrap isOpen={commentOpen}>
+                  <p>{comment.nickname}</p>
+                  <p>{comment.commentdesc}</p>
+                  <ButtonWrapWrap>
+                    <ButtonWrap>
+                      <ButtonComponent
+                        getState={commentOpen}
+                        setState={setCommentOpen}
+                        value="CommentRetouchOpen"
+                      />
+                      <ButtonComponent value="CommentInDelete" coLor="red" />
+                    </ButtonWrap>
+                  </ButtonWrapWrap>
+                </CommentWrap>
+                <RetouchCommentWrap isOpen={commentOpen}>
+                  <p>{comment.nickname}</p>
+                  <p>comment</p>
+                  <RetouchInput />
+                  <RetouchButtonWrapWrap>
+                    <RetouchButtonWrap>
+                      <ButtonComponent
+                        getState={commentOpen}
+                        setState={setCommentOpen}
+                        value="CommentRetouch"
+                      />
+                    </RetouchButtonWrap>
+                  </RetouchButtonWrapWrap>
+                </RetouchCommentWrap>
+              </div>
+            );
+          })
+        : null}
     </div>
   );
 };
