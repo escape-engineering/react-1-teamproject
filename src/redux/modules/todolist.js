@@ -53,6 +53,10 @@ export const __postTodos = createAsyncThunk(
 
 // 본문 수정 하기
 
+// 상세 삭제 하기
+
+// 상세 수정 하기
+
 // 댓글 조회하기
 
 // 댓글 추가 하기
