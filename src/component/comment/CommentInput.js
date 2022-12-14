@@ -15,8 +15,6 @@ const CommentInputComponent = () => {
   const [nickname, onchangeNicknameHandler, resetNickname] = useInput();
   const [comment, onchangeCommentHandler, resetComment] = useInput();
 
-  const { isLoading } = useSelector((state) => state.todolist);
-
   //댓글 배열 소환
   useEffect(() => {
     dispatch(__getComments(param));
@@ -54,14 +52,6 @@ const CommentInputComponent = () => {
     </div>
   );
 };
-
-const LoadingTitle = styled.div`
-  margin: 50px auto;
-  width: 100%;
-  text-align: center;
-  font-size: 50px;
-  font: bold;
-`;
 
 const Wrap = styled.div`
   width: 100%;
