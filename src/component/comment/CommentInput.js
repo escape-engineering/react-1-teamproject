@@ -24,37 +24,33 @@ const CommentInputComponent = () => {
 
   return (
     <div>
-      {isLoading ? (
-        <LoadingTitle> Loading... </LoadingTitle>
-      ) : (
-        <Wrap>
-          <NickWrap>
-            <h4>이름</h4>
-            <NickInput
-              type="text"
-              value={nickname}
-              onChange={onchangeNicknameHandler}
+      <Wrap>
+        <NickWrap>
+          <h4>이름</h4>
+          <NickInput
+            type="text"
+            value={nickname}
+            onChange={onchangeNicknameHandler}
+          />
+        </NickWrap>
+        <CommentWrap>
+          <h4>코멘트</h4>
+          <CommentInput
+            type="text"
+            value={comment}
+            onChange={onchangeCommentHandler}
+          />
+        </CommentWrap>
+        <ButtonWrapWrap>
+          <ButtonWrap>
+            <ButtonComponent
+              getState={[nickname, comment, param]}
+              setState={[resetNickname, resetComment]}
+              value="CommentAdd"
             />
-          </NickWrap>
-          <CommentWrap>
-            <h4>코멘트</h4>
-            <CommentInput
-              type="text"
-              value={comment}
-              onChange={onchangeCommentHandler}
-            />
-          </CommentWrap>
-          <ButtonWrapWrap>
-            <ButtonWrap>
-              <ButtonComponent
-                getState={[nickname, comment, param]}
-                setState={[resetNickname, resetComment]}
-                value="CommentAdd"
-              />
-            </ButtonWrap>
-          </ButtonWrapWrap>
-        </Wrap>
-      )}
+          </ButtonWrap>
+        </ButtonWrapWrap>
+      </Wrap>
     </div>
   );
 };

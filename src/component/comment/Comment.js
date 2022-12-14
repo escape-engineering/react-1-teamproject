@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { __getComments } from '../../redux/modules/todolist';
 import { useParams } from 'react-router-dom';
 import CommentItem from './CommentItem';
+import styled from 'styled-components';
 
 const Comment = () => {
   const params = useParams().id;
@@ -24,15 +25,22 @@ const Comment = () => {
 
   return (
     <div>
-      {isLoading
-        ? null
-        : comments
-        ? todoComments.map((comment) => {
-            return <CommentItem key={comment.id} comment={comment} />;
-          })
-        : null}
+      {isLoading ? (
+        <LoadingTitle> Loading... </LoadingTitle>
+      ) : comments ? (
+        todoComments.map((comment) => {
+          return <CommentItem key={comment.id} comment={comment} />;
+        })
+      ) : null}
     </div>
   );
 };
 
+const LoadingTitle = styled.div`
+  margin: 50px auto;
+  width: 100%;
+  text-align: center;
+  font-size: 50px;
+  font: bold;
+`;
 export default Comment;
