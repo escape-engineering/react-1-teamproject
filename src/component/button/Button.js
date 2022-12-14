@@ -6,8 +6,7 @@ import {
   __postTodos,
   __retouchComment,
   __DeleteTodo,
-  __DoneTodo,
-  __ShiftTodo,
+  __ToggleTodo,
 } from "../../redux/modules/todolist";
 
 import { useNavigate } from "react-router-dom";
@@ -113,16 +112,10 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
     dispatch(__DeleteTodo(id));
     setState(!todoLoad);
   };
-  // Todo 완료하기
+  // Todo 토글
   const DoneTodo = () => {
-    const [id, todoLoad, isDone] = getState;
-    dispatch(__DoneTodo([id, isDone]));
-    setState(!todoLoad);
-  };
-  // Todo 취소하기
-  const ShiftTodo = () => {
-    const [id, todoLoad, isDone] = getState;
-    dispatch(__ShiftTodo([id, isDone]));
+    const [list, todoLoad] = getState;
+    dispatch(__ToggleTodo(list));
     setState(!todoLoad);
   };
   // Todo 상세보기
@@ -164,9 +157,6 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
         break;
       case "DoneTodo":
         DoneTodo();
-        break;
-      case "ShiftTodo":
-        ShiftTodo();
         break;
       case "DetailTodo":
         DetailTodo();
