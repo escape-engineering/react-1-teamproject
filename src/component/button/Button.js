@@ -65,7 +65,7 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
       navigate("/");
     }
   };
-  //상세페이지 수정input오픈
+  //상세페이지 수정오픈
   const EditInDetail = () => {
     const [editOpen] = getState;
     const [seteditOpen] = setState;

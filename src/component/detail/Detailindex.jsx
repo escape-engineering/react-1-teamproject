@@ -12,10 +12,20 @@ const Detailcomponent = () => {
   const { todoDesc, comments } = useSelector((state) => state.todolist);
 
   // input창 open state
-  const [editOpen, seteditOpen] = useState(true);
+  const [editOpen, setEditOpen] = useState(true);
   // 제목 수정 input state
-
+  const [editTitle, setEditTitle] = useState(todoDesc.title);
   // 내용 수정 input state
+  const [editDesc, setEditDesc] = useState(todoDesc.desc);
+  // 제목수정 onchange
+  const onchanegeTitle = (e) => {
+    let value = e.target.value;
+    setEditTitle(value);
+  };
+  const onchanegeDesc = (e) => {
+    let value = e.target.value;
+    setEditDesc(value);
+  };
   useEffect(() => {
     dispatch(__getTodosDesc(params));
   }, [dispatch]);
@@ -25,7 +35,6 @@ const Detailcomponent = () => {
         <DetailHeader>
           <Pagenum>page num :{todoDesc.id}</Pagenum>
           <CommentNum>
-            {/*  코멘트를 셀렉터로 받아오고 id랑 일치하는것들의 필터의 숫자는 댓글숫자 */}
             댓글:
             {comments.filter((list) => list.postId === parseInt(params)).length}
           </CommentNum>
@@ -53,7 +62,7 @@ const Detailcomponent = () => {
           <ButtonComponent
             value="EditInDetailOpen"
             getState={[editOpen]}
-            setState={[seteditOpen]}
+            setState={[setEditOpen]}
           />
           <ButtonComponent
             value="DelInDetail"
@@ -78,7 +87,7 @@ const Detailbox = styled.div`
   width: 800px;
   max-width: 1200px;
   min-width: 800px;
-  height: 330px;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
   border: 3px solid rgb(171, 246, 200);
@@ -114,16 +123,16 @@ const ButtonBox2 = styled.div`
   margin-left: 640px;
   margin-bottom: 5px;
   position: relative;
-  bottom: 20px;
+  bottom: 65px;
 `;
 const ButtonBox3 = styled.div`
   width: 75px;
   height: 40px;
   gap: 5px;
   position: relative;
-  bottom: 65px;
+  bottom: 110px;
   left: 200px;
-  margin-bottom: -80px;
+  margin-bottom: -100px;
 `;
 const ButtonBox4 = styled.div`
   width: 150px;
@@ -131,12 +140,12 @@ const ButtonBox4 = styled.div`
   gap: 5px;
   position: relative;
   left: 640px;
-  bottom: 90px;
+  bottom: 120px;
   display: ${({ isOpen }) => (isOpen ? "none" : "block")};
 `;
 const TextBox = styled.div`
   margin-left: 10px;
-  margin-bottom: -50px;
+  margin-bottom: 20px;
 `;
 
 const EditInput = styled.input`
