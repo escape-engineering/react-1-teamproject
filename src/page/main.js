@@ -1,10 +1,15 @@
 import FormComponent from "../component/form/Form";
 import styled from "styled-components";
 import ButtonComponent from "../component/button/Button";
-import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { __getTodos, __DoneTodos } from "../redux/modules/todolist";
+import todolist, {
+  __getTodos,
+  __DeleteTodo,
+  __DoneTodo,
+  __ShiftTodo,
+} from "../redux/modules/todolist";
+import "./style.css";
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -12,11 +17,10 @@ const MainPage = () => {
     (state) => state.todolist
   );
 
+  const [todoLoad, setTodoLoad] = useState(false);
   useEffect(() => {
     dispatch(__getTodos());
-  }, [dispatch]);
-  //완료하기위한 usestate
-  const [isdone, setisDone] = useState(false);
+  }, [dispatch, todoLoad]);
 
   return (
     <div>
@@ -34,13 +38,16 @@ const MainPage = () => {
                 <div className="todo-body">{list.desc}</div>
                 <div className="button-set">
                   <ButtonBox3>
-                    <ButtonComponent value="DeleteTodo" getState={list.id} />
+                    <ButtonComponent
+                      value="DeleteTodo"
+                      getState={[list.id, todoLoad]}
+                      setState={setTodoLoad}
+                    />
                     <ButtonComponent
                       value="DoneTodo"
-                      getState={[isdone, list.id]}
-                      setState={setisDone}
+                      getState={[list.id, todoLoad, list.isDone]}
+                      setState={setTodoLoad}
                     />
-
                     <ButtonComponent
                       value="DetailTodo"
                       getState={`/list/${list.id}`}
@@ -61,10 +68,15 @@ const MainPage = () => {
                 <div className="todo-body">{list.desc}</div>
                 <div className="button-set">
                   <ButtonBox3>
-                    <ButtonComponent value="DeleteTodo" getState={list.id} />
                     <ButtonComponent
-                      value="CancelDoneTodo"
-                      getState={list.id}
+                      value="DeleteTodo"
+                      getState={[list.id, todoLoad]}
+                      setState={setTodoLoad}
+                    />
+                    <ButtonComponent
+                      value="ShiftTodo"
+                      getState={[list.id, todoLoad, list.isDone]}
+                      setState={setTodoLoad}
                     />
                     <ButtonComponent
                       value="DetailTodo"

@@ -51,10 +51,39 @@ export const __postTodos = createAsyncThunk(
   }
 );
 // 본문 삭제 하기
+export const __DeleteTodo = createAsyncThunk(
+  "deleteTodo",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:3001/Todo/${payload}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 
-// 본문 수정 하기
-export const __doneTodos = createAsyncThunk(
-  "doneTodos",
+// 디테일페이지 본문 삭제 하기
+export const __DetailDeleteTodo = createAsyncThunk(
+  "detaildeleteTodo",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:3001/Todo/${payload}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+// 리스트 토글
+export const __DoneTodo = createAsyncThunk(
+  "doneTodo",
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.patch(
@@ -68,8 +97,22 @@ export const __doneTodos = createAsyncThunk(
     }
   }
 );
-// 리스트 토글
 
+export const __ShiftTodo = createAsyncThunk(
+  "shiftTodo",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.patch(
+        `http://localhost:3001/Todo/${payload[0]}`,
+        { isDone: !payload[1] }
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 // 댓글 조회하기
 export const __getComments = createAsyncThunk(
   "getComments",
@@ -186,23 +229,49 @@ const todoSlice = createSlice({
       })
       // -------------------------------------------------------------
       // 본문 수정하기
-      .addCase(__doneTodos.pending, (state) => {
+
+      // -------------------------------------------------------------
+      // 본문 삭제하기
+      // 로딩 시작
+      .addCase(__DeleteTodo.pending, (state) => {
         state.isLoading = true;
       })
       //로딩 완료. 성공 시
-      .addCase(__doneTodos.fulfilled, (state, action) => {
+      .addCase(__DeleteTodo.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.Todo = [...state.Todo, action.payload];
       })
       //로딩 완료. 실패 시
-      .addCase(__doneTodos.rejected, (state, action) => {
+      .addCase(__DeleteTodo.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
       // -------------------------------------------------------------
-      // 본문 삭제하기
-
-      // -------------------------------------------------------------
       // 리스트 토글
+      .addCase(__DoneTodo.pending, (state) => {
+        state.isLoading = true;
+      })
+      //로딩 완료. 성공 시
+      .addCase(__DoneTodo.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      //로딩 완료. 실패 시
+      .addCase(__DoneTodo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(__ShiftTodo.pending, (state) => {
+        state.isLoading = true;
+      })
+      //로딩 완료. 성공 시
+      .addCase(__ShiftTodo.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      //로딩 완료. 실패 시
+      .addCase(__ShiftTodo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
 
       // -------------------------------------------------------------
       // 댓글 조회하기
@@ -238,6 +307,7 @@ const todoSlice = createSlice({
       })
       // -------------------------------------------------------------
       // 댓글 삭제 하기
+
       // 로딩 시작
       .addCase(__deleteComment.pending, (state) => {
         state.isLoading = true;

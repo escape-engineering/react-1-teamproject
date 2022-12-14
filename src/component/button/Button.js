@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-
 import { useDispatch } from "react-redux";
 import {
   __deleteComment,
   __postComments,
   __postTodos,
   __retouchComment,
+  __DeleteTodo,
+  __DoneTodo,
+  __ShiftTodo,
 } from "../../redux/modules/todolist";
 
 import { useNavigate } from "react-router-dom";
@@ -108,12 +110,22 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   };
   //Todo 삭제하기
   const DeleteTodo = () => {
-    dispatch();
+    const [id, todoLoad] = getState;
+    dispatch(__DeleteTodo(id));
+    setState(!todoLoad);
   };
-  // 본문 Todo 완료하기
-
-  // 본문 Todo 취소하기
-
+  // Todo 완료하기
+  const DoneTodo = () => {
+    const [id, todoLoad, isDone] = getState;
+    dispatch(__DoneTodo([id, isDone]));
+    setState(!todoLoad);
+  };
+  // Todo 취소하기
+  const ShiftTodo = () => {
+    const [id, todoLoad, isDone] = getState;
+    dispatch(__ShiftTodo([id, isDone]));
+    setState(!todoLoad);
+  };
   // Todo 상세보기
   const DetailTodo = (id) => {
     navigate(getState);
@@ -150,6 +162,12 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
         break;
       case "DeleteTodo":
         DeleteTodo();
+        break;
+      case "DoneTodo":
+        DoneTodo();
+        break;
+      case "ShiftTodo":
+        ShiftTodo();
         break;
       case "DetailTodo":
         DetailTodo(getState);
