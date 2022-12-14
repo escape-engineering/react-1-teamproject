@@ -65,7 +65,16 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
       navigate("/");
     }
   };
-
+  //상세페이지 수정input오픈
+  const EditInDetail = () => {
+    const [editOpen] = getState;
+    const [seteditOpen] = setState;
+    seteditOpen(!editOpen);
+  };
+  //상세페이지 수정완료
+  const EditComlete = () => {
+    alert(1);
+  };
   //댓글 추가
   const CommentAdd = () => {
     const [nickname, comment, param] = getState;
@@ -174,6 +183,12 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
       case "DetailTodo":
         DetailTodo();
         break;
+      case "EditInDetailOpen":
+        EditInDetail();
+        break;
+      case "EditComlete":
+        EditComlete();
+        break;
       default:
         break;
     }
@@ -194,8 +209,11 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
       case "DelInDetail":
         setBtnName("삭제하기");
         break;
-      case "EditInDetail":
+      case "EditInDetailOpen":
         setBtnName("수정하기");
+        break;
+      case "EditComlete":
+        setBtnName("수정완료!");
         break;
       case "CommentAdd":
         setBtnName("코멘트 추가하기");

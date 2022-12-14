@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 //초기값
 const initialState = {
@@ -13,10 +13,10 @@ const initialState = {
 //thunk
 //본문 리스트 조회
 export const __getTodos = createAsyncThunk(
-  'getTodos',
+  "getTodos",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get('http://localhost:3001/Todo');
+      const { data } = await axios.get("http://localhost:3001/Todo");
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
@@ -26,7 +26,7 @@ export const __getTodos = createAsyncThunk(
 );
 //본문 조회하기
 export const __getTodosDesc = createAsyncThunk(
-  'getTodosDesc',
+  "getTodosDesc",
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(`http://localhost:3001/Todo/${payload}`);
@@ -39,10 +39,10 @@ export const __getTodosDesc = createAsyncThunk(
 );
 //본문 추가하기
 export const __postTodos = createAsyncThunk(
-  'postTodos',
+  "postTodos",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post('http://localhost:3001/Todo', payload);
+      const { data } = await axios.post("http://localhost:3001/Todo", payload);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
@@ -52,7 +52,7 @@ export const __postTodos = createAsyncThunk(
 );
 // 본문 삭제 하기
 export const __DeleteTodo = createAsyncThunk(
-  'deleteTodo',
+  "deleteTodo",
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.delete(
@@ -84,9 +84,8 @@ export const __DetailDeleteTodo = createAsyncThunk(
 );
 // 리스트 토글
 export const __ToggleTodo = createAsyncThunk(
-  'doneTodo',
+  "doneTodo",
   async (payload, thunkAPI) => {
-    console.log(payload);
     try {
       await axios.patch(`http://localhost:3001/Todo/${payload.id}`, {
         isDone: !payload.isDone,
@@ -100,10 +99,10 @@ export const __ToggleTodo = createAsyncThunk(
 );
 // 댓글 조회하기
 export const __getComments = createAsyncThunk(
-  'getComments',
+  "getComments",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get('http://localhost:3001/comments');
+      const { data } = await axios.get("http://localhost:3001/comments");
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
@@ -113,11 +112,11 @@ export const __getComments = createAsyncThunk(
 );
 // 댓글 추가 하기
 export const __postComments = createAsyncThunk(
-  'postComments',
+  "postComments",
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.post(
-        'http://localhost:3001/comments',
+        "http://localhost:3001/comments",
         payload
       );
       return thunkAPI.fulfillWithValue(data);
@@ -129,7 +128,7 @@ export const __postComments = createAsyncThunk(
 );
 // 댓글 삭제 하기
 export const __deleteComment = createAsyncThunk(
-  'deleteComment',
+  "deleteComment",
   async (payload, thunkAPI) => {
     try {
       await axios.delete(`http://localhost:3001/comments/${payload}`);
@@ -143,7 +142,7 @@ export const __deleteComment = createAsyncThunk(
 );
 // 댓글 수정 하기
 export const __retouchComment = createAsyncThunk(
-  'retouchComment',
+  "retouchComment",
   async (payload, thunkAPI) => {
     try {
       await axios.patch(`http://localhost:3001/comments/${payload[1].id}`, {
@@ -158,7 +157,7 @@ export const __retouchComment = createAsyncThunk(
 );
 //리듀서
 const todoSlice = createSlice({
-  name: 'todolist',
+  name: "todolist",
   initialState,
   reducers: {},
   //thunk용 리듀서

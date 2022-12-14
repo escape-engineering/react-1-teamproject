@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import styled from 'styled-components';
-import ButtonComponent from '../button/Button';
-import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { __getComments } from '../../redux/modules/todolist';
-import useInput from '../../hooks/useInput';
+import { useEffect } from "react";
+import styled from "styled-components";
+import ButtonComponent from "../button/Button";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { __getComments } from "../../redux/modules/todolist";
+import useInput from "../../hooks/useInput";
 
 const CommentInputComponent = () => {
   const dispatch = useDispatch();
