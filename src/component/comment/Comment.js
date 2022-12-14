@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { __getComments } from '../../redux/modules/todolist';
-import { useParams } from 'react-router-dom';
-import CommentItem from './CommentItem';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { __getComments } from "../../redux/modules/todolist";
+import { useParams } from "react-router-dom";
+import CommentItem from "./CommentItem";
 
 const Comment = () => {
   const params = useParams().id;
@@ -14,7 +14,7 @@ const Comment = () => {
   //댓글 배열 소환
   useEffect(() => {
     dispatch(__getComments(params));
-  }, [dispatch, comments]);
+  }, [dispatch]);
 
   //댓글 배열에서 해당 todo에 대한 댓글만 나오도록 필터링
   const todoComments = comments
