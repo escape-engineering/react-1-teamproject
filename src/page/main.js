@@ -34,6 +34,7 @@ const MainPage = () => {
                   <ButtonBox3>
                     <ButtonComponent
                       value="DeleteTodo"
+                      color="red"
                       getState={[list.id, todoLoad]}
                       setState={setTodoLoad}
                     />
@@ -64,11 +65,12 @@ const MainPage = () => {
                   <ButtonBox3>
                     <ButtonComponent
                       value="DeleteTodo"
+                      color="red"
                       getState={[list.id, todoLoad]}
                       setState={setTodoLoad}
                     />
                     <ButtonComponent
-                      value="DoneTodo"
+                      value="ShiftTodo"
                       getState={[list, todoLoad]}
                       setState={setTodoLoad}
                     />

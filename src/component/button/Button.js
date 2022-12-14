@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
-const ButtonComponent = ({ getState, setState, coLor, value }) => {
+const ButtonComponent = ({ getState, setState, color, value }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -158,6 +158,9 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "DoneTodo":
         DoneTodo();
         break;
+      case "ShiftTodo":
+        DoneTodo();
+        break;
       case "DetailTodo":
         DetailTodo();
         break;
@@ -214,7 +217,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   }, [value]);
 
   return (
-    <StyledButton btnCoLor={coLor} onClick={btnBunc}>
+    <StyledButton btnColor={color} onClick={btnBunc}>
       {btnName}
     </StyledButton>
   );
@@ -223,16 +226,16 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
 const StyledButton = styled.button`
   width: 100%;
   height: 100%;
-  background-color: ${({ btnCoLor }) =>
-    btnCoLor === "red" ? "rgb(231, 181, 181)" : "rgb(191, 178, 225)"};
+  background-color: ${({ btnColor }) =>
+    btnColor === "red" ? "rgb(231, 181, 181)" : "rgb(191, 178, 225)"};
   border: none;
   font-weight: bold;
   color: white;
   border-radius: 10px;
   cursor: pointer;
   &:hover {
-    background-color: ${({ btnCoLor }) =>
-      btnCoLor === "red" ? "rgb(178, 84, 84)" : "rgb(122, 98, 184)"};
+    background-color: ${({ btnColor }) =>
+      btnColor === "red" ? "rgb(178, 84, 84)" : "rgb(122, 98, 184)"};
   }
 `;
 
