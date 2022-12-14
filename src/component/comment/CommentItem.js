@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import ButtonComponent from '../button/Button';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { __getComments } from '../../redux/modules/todolist';
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 const CommentItem = ({ comment }) => {
   const [commentOpen, setCommentOpen] = useState(true);
