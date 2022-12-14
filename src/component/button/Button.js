@@ -39,7 +39,6 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
           title: title,
           desc: desc,
           isDone: false,
-          comments: [],
         };
         //api
         dispatch(__postTodos(newTodo));
@@ -119,7 +118,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
     alert(1);
   };
   // Todo 상세보기
-  const DetailTodo = (id) => {
+  const DetailTodo = () => {
     navigate(getState);
   };
 
@@ -162,7 +161,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
         ShiftTodo();
         break;
       case "DetailTodo":
-        DetailTodo(getState);
+        DetailTodo();
         break;
       default:
         break;
