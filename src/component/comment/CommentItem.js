@@ -1,12 +1,12 @@
-import styled from 'styled-components';
-import ButtonComponent from '../button/Button';
-import { useState } from 'react';
+import styled from "styled-components";
+import ButtonComponent from "../button/Button";
+import { useState } from "react";
 
 const CommentItem = ({ comment }) => {
   const [commentOpen, setCommentOpen] = useState(true);
 
   // 댓글 수정 input을 위한 State
-  const [newCommentDesc, setNewCommentDesc] = useState('');
+  const [newCommentDesc, setNewCommentDesc] = useState("");
 
   // 댓글 수정 input을 위한 onChangeNewCommentHandler
   const onChangeNewCommentDescHandler = (e) => {
@@ -17,8 +17,8 @@ const CommentItem = ({ comment }) => {
   return (
     <div key={comment.id}>
       <CommentWrap isOpen={commentOpen}>
-        <p>{comment.nickname}</p>
-        <p>{comment.commentdesc}</p>
+        <p>닉네임:{comment.nickname}</p>
+        <p>코멘트:{comment.commentdesc}</p>
         <ButtonWrapWrap>
           <ButtonWrap>
             <ButtonComponent
@@ -39,7 +39,7 @@ const CommentItem = ({ comment }) => {
         <p>comment</p>
         <RetouchInput
           type="text"
-          value={newCommentDesc || ''}
+          value={newCommentDesc || ""}
           onChange={onChangeNewCommentDescHandler}
         />
         <RetouchButtonWrapWrap>
@@ -61,7 +61,7 @@ const RetouchCommentWrap = styled.div`
   height: 100%;
   padding: 10px;
   border-bottom: 1px solid green;
-  display: ${({ isOpen }) => (isOpen ? 'none' : 'block')};
+  display: ${({ isOpen }) => (isOpen ? "none" : "block")};
 `;
 
 const RetouchInput = styled.input`
@@ -88,7 +88,7 @@ const CommentWrap = styled.div`
   height: 100%;
   padding: 10px;
   border-bottom: 1px solid green;
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
 `;
 
 const ButtonWrap = styled.div`

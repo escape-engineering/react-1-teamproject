@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   __deleteComment,
   __postComments,
@@ -7,11 +7,12 @@ import {
   __retouchComment,
   __DeleteTodo,
   __ToggleTodo,
-} from '../../redux/modules/todolist';
+  __DetailDeleteTodo,
+} from "../../redux/modules/todolist";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const ButtonComponent = ({ getState, setState, color, value }) => {
   const navigate = useNavigate();
@@ -28,10 +29,10 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
       const [title, desc] = getState;
       const [resetTitle, resetDesc, setInputError, setBoxOpen] = setState;
 
-      if (title.trim() === '') {
-        setInputError('제목을 입력해 주세요.');
-      } else if (desc.trim() === '') {
-        setInputError('내용을 입력해 주세요.');
+      if (title.trim() === "") {
+        setInputError("제목을 입력해 주세요.");
+      } else if (desc.trim() === "") {
+        setInputError("내용을 입력해 주세요.");
       } else {
         //새로운 todo 생성
         const newTodo = {
@@ -54,21 +55,34 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
 
   //뒤로가기
   const GoBackPage = () => {
-    navigate('/');
+    navigate("/");
   };
-  //리스트삭제
+  //상세페이지본문삭제
   const DelInDetail = () => {
-    window.confirm('정말삭제할려고!?') ? alert('삭제 ㅠㅠ') : alert('살았다!');
+    const [id] = getState;
+    if (window.confirm("삭제하시겠습니까?")) {
+      dispatch(__DetailDeleteTodo(id));
+      navigate("/");
+    }
   };
-
+  //상세페이지 수정오픈
+  const EditInDetail = () => {
+    const [editOpen] = getState;
+    const [seteditOpen] = setState;
+    seteditOpen(!editOpen);
+  };
+  //상세페이지 수정완료
+  const EditComlete = () => {
+    alert(1);
+  };
   //댓글 추가
   const CommentAdd = () => {
     const [nickname, comment, param] = getState;
     const [resetNickname, resetComment] = setState;
     if (!nickname) {
-      alert('닉네임을 입력해주세요.');
+      alert("닉네임을 입력해주세요.");
     } else if (!comment) {
-      alert('댓글을 입력해주세요.');
+      alert("댓글을 입력해주세요.");
     } else {
       //추가할 comment 생성
       const newComment = {
@@ -105,7 +119,7 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
         //api
         dispatch(__retouchComment([newCommentDesc, comment]));
       } else {
-        alert('내용을 입력하세요.');
+        alert("내용을 입력하세요.");
       }
     } catch (err) {
       console.log(err);
@@ -128,46 +142,52 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
     navigate(getState);
   };
 
-  const [btnName, setBtnName] = useState('');
+  const [btnName, setBtnName] = useState("");
 
   //버튼 onclick 시에 적용할 함수
   const btnBunc = () => {
     switch (value) {
-      case 'ActiveAddBox':
+      case "ActiveAddBox":
         ActiveAddBox();
         break;
-      case 'BackPage':
+      case "BackPage":
         GoBackPage();
         break;
-      case 'CommentAdd':
+      case "CommentAdd":
         CommentAdd();
         break;
-      case 'CommentInDelete':
+      case "CommentInDelete":
         CommentDelete();
         break;
-      case 'CommentRetouchOpen':
+      case "CommentRetouchOpen":
         CommentRetouchOpen();
         break;
-      case 'CommentRetouch':
+      case "CommentRetouch":
         CommentRetouch();
         break;
-      case 'todoSubmit':
+      case "todoSubmit":
         todoSubmit();
         break;
-      case 'DelInDetail':
+      case "DelInDetail":
         DelInDetail();
         break;
-      case 'DeleteTodo':
+      case "DeleteTodo":
         DeleteTodo();
         break;
-      case 'DoneTodo':
+      case "DoneTodo":
         DoneTodo();
         break;
-      case 'ShiftTodo':
+      case "ShiftTodo":
         DoneTodo();
         break;
-      case 'DetailTodo':
+      case "DetailTodo":
         DetailTodo();
+        break;
+      case "EditInDetailOpen":
+        EditInDetail();
+        break;
+      case "EditComlete":
+        EditComlete();
         break;
       default:
         break;
@@ -177,44 +197,47 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
   useEffect(() => {
     // 버튼 이름
     switch (value) {
-      case 'ActiveAddBox':
-        setBtnName('리스트 추가하기');
+      case "ActiveAddBox":
+        setBtnName("리스트 추가하기");
         break;
-      case 'todoSubmit':
-        setBtnName('추가하기');
+      case "todoSubmit":
+        setBtnName("추가하기");
         break;
-      case 'BackPage':
-        setBtnName('뒤로가기');
+      case "BackPage":
+        setBtnName("뒤로가기");
         break;
-      case 'DelInDetail':
-        setBtnName('삭제하기');
+      case "DelInDetail":
+        setBtnName("삭제하기");
         break;
-      case 'EditInDetail':
-        setBtnName('수정하기');
+      case "EditInDetailOpen":
+        setBtnName("수정하기");
         break;
-      case 'CommentAdd':
-        setBtnName('코멘트 추가하기');
+      case "EditComlete":
+        setBtnName("수정완료!");
         break;
-      case 'CommentInDelete':
-        setBtnName('코멘트 삭제하기');
+      case "CommentAdd":
+        setBtnName("코멘트 추가하기");
         break;
-      case 'CommentRetouchOpen':
-        setBtnName('코멘트 수정하기');
+      case "CommentInDelete":
+        setBtnName("코멘트 삭제하기");
         break;
-      case 'CommentRetouch':
-        setBtnName('수정완료');
+      case "CommentRetouchOpen":
+        setBtnName("코멘트 수정하기");
         break;
-      case 'DeleteTodo':
-        setBtnName('삭제하기');
+      case "CommentRetouch":
+        setBtnName("수정완료");
         break;
-      case 'DoneTodo':
-        setBtnName('완료하기');
+      case "DeleteTodo":
+        setBtnName("삭제하기");
         break;
-      case 'ShiftTodo':
-        setBtnName('취소하기');
+      case "DoneTodo":
+        setBtnName("완료하기");
         break;
-      case 'DetailTodo':
-        setBtnName('상세보기');
+      case "ShiftTodo":
+        setBtnName("취소하기");
+        break;
+      case "DetailTodo":
+        setBtnName("상세보기");
         break;
       default:
         break;
@@ -232,7 +255,7 @@ const StyledButton = styled.button`
   width: 100%;
   height: 100%;
   background-color: ${({ btnColor }) =>
-    btnColor === 'red' ? 'rgb(231, 181, 181)' : 'rgb(191, 178, 225)'};
+    btnColor === "red" ? "rgb(231, 181, 181)" : "rgb(191, 178, 225)"};
   border: none;
   font-weight: bold;
   color: white;
@@ -240,7 +263,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   &:hover {
     background-color: ${({ btnColor }) =>
-      btnColor === 'red' ? 'rgb(178, 84, 84)' : 'rgb(122, 98, 184)'};
+      btnColor === "red" ? "rgb(178, 84, 84)" : "rgb(122, 98, 184)"};
   }
 `;
 
