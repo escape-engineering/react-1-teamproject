@@ -13,7 +13,6 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
-import axios from "axios";
 
 const ButtonComponent = ({ getState, setState, color, value }) => {
   const navigate = useNavigate();
@@ -70,21 +69,24 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
   //댓글 추가
   const CommentAdd = () => {
     const [nickname, comment, param] = getState;
-    const [setNickname, setComment] = setState;
+    const [resetNickname, resetComment] = setState;
     if (!nickname) {
       alert("닉네임을 입력해주세요.");
     } else if (!comment) {
       alert("댓글을 입력해주세요.");
     } else {
-      setNickname("");
-      setComment("");
+      //추가할 comment 생성
       const newComment = {
         id: Date.now() + Math.random() * 100,
         postId: Number(param),
         nickname: nickname,
         commentdesc: comment,
       };
+      //api
       dispatch(__postComments(newComment));
+      //input 초기화
+      resetNickname();
+      resetComment();
     }
   };
   //댓글 삭제
