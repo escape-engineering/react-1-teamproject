@@ -7,16 +7,23 @@ import { __getComments } from '../../redux/modules/todolist';
 
 const CommentInputComponent = () => {
   const dispatch = useDispatch();
+  //페이지의 id값 추출
   const param = useParams().id;
+
+  //댓글관련 State
   const [nickname, setNickname] = useState('');
   const [comment, setComment] = useState('');
 
+  //Nickname input값 state설정
   const nickWrite = ({ target: { value } }) => {
     setNickname(value);
   };
+
+  //comment input값 state설정
   const commentWrite = ({ target: { value } }) => {
     setComment(value);
   };
+
   //댓글 배열 소환
   useEffect(() => {
     dispatch(__getComments(param));
