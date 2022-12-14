@@ -15,6 +15,8 @@ const MainPage = () => {
   useEffect(() => {
     dispatch(__getTodos());
   }, [dispatch]);
+  //완료하기위한 usestate
+  const [isdone, setisDone] = useState(false);
 
   return (
     <div>
@@ -33,7 +35,11 @@ const MainPage = () => {
                 <div className="button-set">
                   <ButtonBox3>
                     <ButtonComponent value="DeleteTodo" getState={list.id} />
-                    <ButtonComponent value="DoneTodo" getState={list.isdone} />
+                    <ButtonComponent
+                      value="DoneTodo"
+                      getState={[isdone, list.id]}
+                      setState={setisDone}
+                    />
 
                     <ButtonComponent
                       value="DetailTodo"

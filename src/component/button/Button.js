@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   __deleteComment,
+  __doneTodos,
   __postTodos,
-  __DoneTodos,
+  __retouchComment,
 } from "../../redux/modules/todolist";
 
 import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
+import axios from "axios";
 
 const ButtonComponent = ({ getState, setState, coLor, value }) => {
   const navigate = useNavigate();
@@ -69,6 +71,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
     } else if (!comment) {
       alert("댓글을 입력해주세요.");
     } else {
+      console.log(nickname, ",", comment);
       setNickname("");
       setComment("");
     }
@@ -85,8 +88,22 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   };
   //댓글 수정완료
   const CommentRetouch = () => {
-    alert(2);
-    setState(!getState);
+    try {
+      const [newCommentDesc, comment, commentOpen, commentLoad] = getState;
+      const [setCommentOpen, setCommentLoad] = setState;
+      if (newCommentDesc) {
+        //수정 창 닫기
+        setCommentOpen(!commentOpen);
+        //리렌더링 위함
+        setCommentLoad(!commentLoad);
+        //api
+        dispatch(__retouchComment([newCommentDesc, comment]));
+      } else {
+        alert("내용을 입력하세요.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   //Todo 삭제하기
   const DeleteTodo = () => {
@@ -94,10 +111,9 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   };
   // 본문 Todo 완료하기
   const DoneTodo = () => {
-    const [isdone] = getState;
-    dispatch(__DoneTodos(isdone));
-
-    alert(1);
+    const [id, isdone] = getState;
+    const [setisDone] = setState;
+    dispatch(__doneTodos());
   };
   // 본문 Todo 취소하기
   const CancelDoneTodo = () => {

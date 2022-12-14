@@ -6,7 +6,6 @@ const initialState = {
   Todo: [],
   todoDesc: {},
   comments: [],
-  isdone: false,
   isLoading: false,
   error: null,
 };
@@ -54,12 +53,13 @@ export const __postTodos = createAsyncThunk(
 // 본문 삭제 하기
 
 // 본문 수정 하기
-export const __DoneTodos = createAsyncThunk(
-  "DoneTodos",
+export const __doneTodos = createAsyncThunk(
+  "doneTodos",
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.patch(
-        `http://localhost:3001/Todo${payload}`
+        `http://localhost:3001/Todo/${payload[0]}`,
+        { isDone: !payload[1] }
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
@@ -68,10 +68,6 @@ export const __DoneTodos = createAsyncThunk(
     }
   }
 );
-// 상세 삭제 하기
-
-// 상세 수정 하기
-
 // 리스트 토글
 
 // 댓글 조회하기
@@ -105,23 +101,25 @@ export const __deleteComment = createAsyncThunk(
   }
 );
 // 댓글 수정 하기
-
+export const __retouchComment = createAsyncThunk(
+  "retouchComment",
+  async (payload, thunkAPI) => {
+    try {
+      await axios.patch(`http://localhost:3001/comments/${payload[1].id}`, {
+        ...payload[1],
+        commentdesc: payload[0],
+      });
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 //리듀서
 const todoSlice = createSlice({
   name: "todolist",
   initialState,
-  reducers: {
-    retouchComment: (state, action) => {
-      return state.comment.map((comment) =>
-        comment.commentId === action.payload.id
-          ? { ...comment, commentdesc: action.payload.desc }
-          : comment
-      );
-    },
-    donetodos: (state, action) => {
-      return (state.isdone = action.payload);
-    },
-  },
+  reducers: {},
   //thunk용 리듀서
   extraReducers: (builder) => {
     builder
@@ -175,16 +173,15 @@ const todoSlice = createSlice({
       })
       // -------------------------------------------------------------
       // 본문 수정하기
-      // 로딩 시작
-      .addCase(__DoneTodos.pending, (state) => {
+      .addCase(__doneTodos.pending, (state) => {
         state.isLoading = true;
       })
       //로딩 완료. 성공 시
-      .addCase(__DoneTodos.fulfilled, (state, action) => {
+      .addCase(__doneTodos.fulfilled, (state, action) => {
         state.isLoading = false;
       })
       //로딩 완료. 실패 시
-      .addCase(__DoneTodos.rejected, (state, action) => {
+      .addCase(__doneTodos.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
@@ -224,13 +221,26 @@ const todoSlice = createSlice({
       .addCase(__deleteComment.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      // -------------------------------------------------------------
+      // 댓글 수정 하기
+      // 로딩 시작
+      .addCase(__retouchComment.pending, (state) => {
+        state.isLoading = true;
+      })
+      // 로딩 완료. 성공 시
+      .addCase(__retouchComment.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      // 로딩 완료. 실패 시
+      .addCase(__retouchComment.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
-    // -------------------------------------------------------------
-    // 댓글 수정 하기
   },
 });
 
 // 액션크리에이터는 컴포넌트에서 사용하기 위해 export 하고
-export const { retouchComment, donetodos } = todoSlice.actions;
+export const {} = todoSlice.actions;
 // reducer 는 configStore에 등록하기 위해 export default 합니다.
 export default todoSlice.reducer;
