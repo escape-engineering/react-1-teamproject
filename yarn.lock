@@ -2701,7 +2701,7 @@ axe-core@^4.4.3:
 
 axios@^1.2.1:
   version "1.2.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.1.tgz#44cf04a3c9f0c2252ebd85975361c026cb9f864a"
+  resolved "https://registry.npmjs.org/axios/-/axios-1.2.1.tgz"
   integrity sha512-I88cFiGu9ryt/tfVEi4kX2SITsvDddTajXTOFmt2uK1ZVA8LytjtdeyefdQWEf5PU8w+4SSJDoYnggflB5tW4A==
   dependencies:
     follow-redirects "^1.15.0"
@@ -6080,7 +6080,7 @@ json-schema@^0.4.0:
 
 json-server@^0.17.1:
   version "0.17.1"
-  resolved "https://registry.yarnpkg.com/json-server/-/json-server-0.17.1.tgz#7ce793e4ee52e815648b0ce4e0736197bb671e5c"
+  resolved "https://registry.npmjs.org/json-server/-/json-server-0.17.1.tgz"
   integrity sha512-2cR/IAL9xX4M1Y5ONMpnvRvJ5o9gJH5GsSQs7fQHdTKTKoN4YRZu1ApQKg/4P0XzwlLyUDqTlwhPq9nsvJ9acw==
   dependencies:
     body-parser "^1.19.0"
@@ -7730,7 +7730,7 @@ react-refresh@^0.11.0:
 
 react-router-dom@^6.4.5:
   version "6.4.5"
-  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.4.5.tgz"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.4.5.tgz#4fdb12efef4f3848c693a76afbeaed1f6ca02047"
   integrity sha512-a7HsgikBR0wNfroBHcZUCd9+mLRqZS8R5U1Z1mzLWxFXEkUT3vR1XXmSIVoVpxVX8Bar0nQYYYc9Yipq8dWwAA==
   dependencies:
     "@remix-run/router" "1.0.5"
