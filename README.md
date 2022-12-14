@@ -37,7 +37,8 @@
 - 해결
   isLoading의 상태값 변경을 useEffect에 반영
   => 상태는 바뀌는데 리렌더링이 안이루어짐 => state값이 아닌 것으로 추정
-  리렌더링용 state를 생성 후 useEffect에 반영 => 성공
+  => 리렌더링용 state를 생성 후 useEffect에 반영 => 성공 => 더 좋은 방법이 있을 거 같은 느낌
+  => 삭제 하기 thumk에서 get 메소드를 이용, state에 반영 => 성공!
 
 ---
 

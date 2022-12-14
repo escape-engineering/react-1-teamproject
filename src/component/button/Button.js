@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   __deleteComment,
-  __doneTodos,
+  __postComments,
   __postTodos,
   __retouchComment,
 } from "../../redux/modules/todolist";
@@ -64,23 +64,27 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
 
   //댓글 추가
   const CommentAdd = () => {
-    const [nickname, comment] = getState;
+    const [nickname, comment, param] = getState;
     const [setNickname, setComment] = setState;
     if (!nickname) {
       alert("닉네임을 입력해주세요.");
     } else if (!comment) {
       alert("댓글을 입력해주세요.");
     } else {
-      console.log(nickname, ",", comment);
       setNickname("");
       setComment("");
+      const newComment = {
+        id: Date.now() + Math.random() * 100,
+        postId: Number(param),
+        nickname: nickname,
+        commentdesc: comment,
+      };
+      dispatch(__postComments(newComment));
     }
   };
   //댓글 삭제
   const CommentDelete = () => {
-    const [id, commentLoad] = getState;
-    dispatch(__deleteComment(id));
-    setState(!commentLoad);
+    dispatch(__deleteComment(getState));
   };
   //댓글 수정
   const CommentRetouchOpen = () => {
@@ -89,13 +93,10 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   //댓글 수정완료
   const CommentRetouch = () => {
     try {
-      const [newCommentDesc, comment, commentOpen, commentLoad] = getState;
-      const [setCommentOpen, setCommentLoad] = setState;
+      const [newCommentDesc, comment, commentOpen] = getState;
       if (newCommentDesc) {
         //수정 창 닫기
-        setCommentOpen(!commentOpen);
-        //리렌더링 위함
-        setCommentLoad(!commentLoad);
+        setState(!commentOpen);
         //api
         dispatch(__retouchComment([newCommentDesc, comment]));
       } else {
@@ -110,15 +111,9 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
     dispatch();
   };
   // 본문 Todo 완료하기
-  const DoneTodo = () => {
-    const [id, isdone] = getState;
-    const [setisDone] = setState;
-    dispatch(__doneTodos());
-  };
+
   // 본문 Todo 취소하기
-  const CancelDoneTodo = () => {
-    alert("2");
-  };
+
   // Todo 상세보기
   const DetailTodo = (id) => {
     navigate(getState);
@@ -155,12 +150,6 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
         break;
       case "DeleteTodo":
         DeleteTodo();
-        break;
-      case "DoneTodo":
-        DoneTodo();
-        break;
-      case "CancelDoneTodo":
-        CancelDoneTodo();
         break;
       case "DetailTodo":
         DetailTodo(getState);
@@ -206,7 +195,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "DoneTodo":
         setBtnName("완료하기");
         break;
-      case "CancelDoneTodo":
+      case "ShiftTodo":
         setBtnName("취소하기");
         break;
       case "DetailTodo":
