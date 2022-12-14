@@ -1,10 +1,15 @@
-import { useState } from "react";
-import styled from "styled-components";
-import ButtonComponent from "../button/Button";
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import ButtonComponent from '../button/Button';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { __getComments } from '../../redux/modules/todolist';
 
 const CommentInputComponent = () => {
-  const [nickname, setNickname] = useState("");
-  const [comment, setComment] = useState("");
+  const dispatch = useDispatch();
+  const param = useParams().id;
+  const [nickname, setNickname] = useState('');
+  const [comment, setComment] = useState('');
 
   const nickWrite = ({ target: { value } }) => {
     setNickname(value);
@@ -12,6 +17,10 @@ const CommentInputComponent = () => {
   const commentWrite = ({ target: { value } }) => {
     setComment(value);
   };
+  //댓글 배열 소환
+  useEffect(() => {
+    dispatch(__getComments(param));
+  }, [dispatch]);
 
   return (
     <Wrap>
@@ -26,7 +35,7 @@ const CommentInputComponent = () => {
       <ButtonWrapWrap>
         <ButtonWrap>
           <ButtonComponent
-            getState={[nickname, comment]}
+            getState={[nickname, comment, param]}
             setState={[setNickname, setComment]}
             value="CommentAdd"
           />

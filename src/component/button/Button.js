@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   __deleteComment,
+  __postComments,
   __postTodos,
   __retouchComment,
 } from "../../redux/modules/todolist";
@@ -63,16 +64,22 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
 
   //댓글 추가
   const CommentAdd = () => {
-    const [nickname, comment] = getState;
+    const [nickname, comment, param] = getState;
     const [setNickname, setComment] = setState;
     if (!nickname) {
       alert("닉네임을 입력해주세요.");
     } else if (!comment) {
       alert("댓글을 입력해주세요.");
     } else {
-      console.log(nickname, ",", comment);
       setNickname("");
       setComment("");
+      const newComment = {
+        id: Date.now() + Math.random() * 100,
+        postId: Number(param),
+        nickname: nickname,
+        commentdesc: comment,
+      };
+      dispatch(__postComments(newComment));
     }
   };
   //댓글 삭제
@@ -87,10 +94,9 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   const CommentRetouch = () => {
     try {
       const [newCommentDesc, comment, commentOpen] = getState;
-      const [setCommentOpen] = setState;
       if (newCommentDesc) {
         //수정 창 닫기
-        setCommentOpen(!commentOpen);
+        setState(!commentOpen);
         //api
         dispatch(__retouchComment([newCommentDesc, comment]));
       } else {
