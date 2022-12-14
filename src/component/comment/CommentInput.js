@@ -1,10 +1,11 @@
-import { useEffect } from "react";
-import styled from "styled-components";
-import ButtonComponent from "../button/Button";
-import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { __getComments } from "../../redux/modules/todolist";
-import useInput from "../../hooks/useInput";
+
+import { useEffect } from 'react';
+import styled from 'styled-components';
+import ButtonComponent from '../button/Button';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getComments } from '../../redux/modules/todolist';
+import useInput from '../../hooks/useInput';
 
 const CommentInputComponent = () => {
   const dispatch = useDispatch();
@@ -21,33 +22,35 @@ const CommentInputComponent = () => {
   }, [dispatch]);
 
   return (
-    <Wrap>
-      <NickWrap>
-        <h4>이름</h4>
-        <NickInput
-          type="text"
-          value={nickname}
-          onChange={onchangeNicknameHandler}
-        />
-      </NickWrap>
-      <CommentWrap>
-        <h4>코멘트</h4>
-        <CommentInput
-          type="text"
-          value={comment}
-          onChange={onchangeCommentHandler}
-        />
-      </CommentWrap>
-      <ButtonWrapWrap>
-        <ButtonWrap>
-          <ButtonComponent
-            getState={[nickname, comment, param]}
-            setState={[resetNickname, resetComment]}
-            value="CommentAdd"
+    <div>
+      <Wrap>
+        <NickWrap>
+          <h4>이름</h4>
+          <NickInput
+            type="text"
+            value={nickname}
+            onChange={onchangeNicknameHandler}
           />
-        </ButtonWrap>
-      </ButtonWrapWrap>
-    </Wrap>
+        </NickWrap>
+        <CommentWrap>
+          <h4>코멘트</h4>
+          <CommentInput
+            type="text"
+            value={comment}
+            onChange={onchangeCommentHandler}
+          />
+        </CommentWrap>
+        <ButtonWrapWrap>
+          <ButtonWrap>
+            <ButtonComponent
+              getState={[nickname, comment, param]}
+              setState={[resetNickname, resetComment]}
+              value="CommentAdd"
+            />
+          </ButtonWrap>
+        </ButtonWrapWrap>
+      </Wrap>
+    </div>
   );
 };
 
