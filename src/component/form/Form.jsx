@@ -3,12 +3,12 @@ import ButtonComponent from "../button/Button";
 import { useEffect, useState } from "react";
 
 import "./style.css";
-import { useDispatch, useSelector } from "react-redux";
 import { __getTodos } from "../../redux/modules/todolist";
 import useInput from "../../hooks/useInput";
 
 const FormComponent = () => {
-  const dispatch = useDispatch();
+  const titleLimit = 15;
+  const descLimit = 200;
   const [boxOpen, setBoxOpen] = useState(false);
 
   const [inputError, setInputError] = useState("");
@@ -36,20 +36,26 @@ const FormComponent = () => {
       <ActiveWrap isActive={boxOpen}>
         <ListAddBox>
           <div className="listAddWrap">
-            <label htmlFor="listAddLabel">제목</label>
+            <label htmlFor="listAddLabel">
+              제목<span>({title.length})</span>
+            </label>
             <input
               id="listAddtitle"
               type="text"
+              maxLength={titleLimit}
               value={title}
               onChange={onchangeTitleHandler}
               onFocus={removeError}
             />
           </div>
           <div className="listAddWrap">
-            <label htmlFor="listAddLabel">내용</label>
+            <label htmlFor="listAddLabel">
+              내용<span>({desc.length})</span>
+            </label>
             <textarea
               id="listAddDesc"
               type="text"
+              maxLength={descLimit}
               value={desc}
               onChange={onchangedescHandler}
               onFocus={removeError}
@@ -65,8 +71,8 @@ const FormComponent = () => {
           </div>
         </ListAddBox>
         <TodoAddExplainWrap>
-          <li>제목은 15자 이하로 작성하여 주세요.</li>
-          <li>내용은 200자 이하로 작성하여 주세요.</li>
+          <li>제목은 {titleLimit}자 이하로 작성하여 주세요.</li>
+          <li>내용은 {descLimit}자 이하로 작성하여 주세요.</li>
         </TodoAddExplainWrap>
       </ActiveWrap>
     </Wrap>
@@ -95,6 +101,9 @@ const ListAddBox = styled.div`
     display: block;
     margin-bottom: 10px;
     color: #2c2c2c;
+  }
+  span {
+    font-size: 15px;
   }
   input {
     width: 300px;
