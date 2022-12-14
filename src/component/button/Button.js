@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 
 import { useDispatch } from "react-redux";
-import { __postTodos } from "../../redux/modules/todolist";
+import {
+  __deleteComment,
+  __postTodos,
+  __DoneTodos,
+} from "../../redux/modules/todolist";
 
 import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
-import axios from "axios";
 
 const ButtonComponent = ({ getState, setState, coLor, value }) => {
   const navigate = useNavigate();
@@ -66,14 +69,15 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
     } else if (!comment) {
       alert("댓글을 입력해주세요.");
     } else {
-      console.log(nickname, ",", comment);
       setNickname("");
       setComment("");
     }
   };
   //댓글 삭제
   const CommentDelete = () => {
-    alert(1);
+    const [id, commentLoad] = getState;
+    dispatch(__deleteComment(id));
+    setState(!commentLoad);
   };
   //댓글 수정
   const CommentRetouchOpen = () => {
@@ -88,13 +92,16 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   const DeleteTodo = () => {
     dispatch();
   };
-  // Todo 완료하기
+  // 본문 Todo 완료하기
   const DoneTodo = () => {
+    const [isdone] = getState;
+    dispatch(__DoneTodos(isdone));
+
     alert(1);
   };
-  // Todo 취소하기
-  const ShiftTodo = () => {
-    alert(1);
+  // 본문 Todo 취소하기
+  const CancelDoneTodo = () => {
+    alert("2");
   };
   // Todo 상세보기
   const DetailTodo = (id) => {
@@ -115,7 +122,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "CommentAdd":
         CommentAdd();
         break;
-      case "CommentDelete":
+      case "CommentInDelete":
         CommentDelete();
         break;
       case "CommentRetouchOpen":
@@ -136,8 +143,8 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "DoneTodo":
         DoneTodo();
         break;
-      case "ShiftTodo":
-        ShiftTodo();
+      case "CancelDoneTodo":
+        CancelDoneTodo();
         break;
       case "DetailTodo":
         DetailTodo(getState);
@@ -183,7 +190,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
       case "DoneTodo":
         setBtnName("완료하기");
         break;
-      case "ShiftTodo":
+      case "CancelDoneTodo":
         setBtnName("취소하기");
         break;
       case "DetailTodo":

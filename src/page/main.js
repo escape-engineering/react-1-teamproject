@@ -3,17 +3,19 @@ import styled from "styled-components";
 import ButtonComponent from "../component/button/Button";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { __getTodos } from "../redux/modules/todolist";
+import { useEffect, useState } from "react";
+import { __getTodos, __DoneTodos } from "../redux/modules/todolist";
 
 const MainPage = () => {
   const dispatch = useDispatch();
   const { Todo, todoDesc, isloading, error } = useSelector(
     (state) => state.todolist
   );
+
   useEffect(() => {
     dispatch(__getTodos());
   }, [dispatch]);
+
   return (
     <div>
       {/* 재정 */}
@@ -31,7 +33,8 @@ const MainPage = () => {
                 <div className="button-set">
                   <ButtonBox3>
                     <ButtonComponent value="DeleteTodo" getState={list.id} />
-                    <ButtonComponent value="DoneTodo" getState={list.id} />
+                    <ButtonComponent value="DoneTodo" getState={list.isdone} />
+
                     <ButtonComponent
                       value="DetailTodo"
                       getState={`/list/${list.id}`}
@@ -53,7 +56,10 @@ const MainPage = () => {
                 <div className="button-set">
                   <ButtonBox3>
                     <ButtonComponent value="DeleteTodo" getState={list.id} />
-                    <ButtonComponent value="DoneTodo" getState={list.id} />
+                    <ButtonComponent
+                      value="CancelDoneTodo"
+                      getState={list.id}
+                    />
                     <ButtonComponent
                       value="DetailTodo"
                       getState={`/list/${list.id}`}

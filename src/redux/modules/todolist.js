@@ -6,6 +6,7 @@ const initialState = {
   Todo: [],
   todoDesc: {},
   comments: [],
+  isdone: false,
   isLoading: false,
   error: null,
 };
@@ -53,7 +54,20 @@ export const __postTodos = createAsyncThunk(
 // 본문 삭제 하기
 
 // 본문 수정 하기
-
+export const __DoneTodos = createAsyncThunk(
+  "DoneTodos",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.patch(
+        `http://localhost:3001/Todo${payload}`
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (err) {
+      console.log(err);
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 // 상세 삭제 하기
 
 // 상세 수정 하기
@@ -98,11 +112,14 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     retouchComment: (state, action) => {
-      return state.Comment.map((comment) =>
+      return state.comment.map((comment) =>
         comment.commentId === action.payload.id
           ? { ...comment, commentdesc: action.payload.desc }
           : comment
       );
+    },
+    donetodos: (state, action) => {
+      return (state.isdone = action.payload);
     },
   },
   //thunk용 리듀서
@@ -158,7 +175,19 @@ const todoSlice = createSlice({
       })
       // -------------------------------------------------------------
       // 본문 수정하기
-
+      // 로딩 시작
+      .addCase(__DoneTodos.pending, (state) => {
+        state.isLoading = true;
+      })
+      //로딩 완료. 성공 시
+      .addCase(__DoneTodos.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      //로딩 완료. 실패 시
+      .addCase(__DoneTodos.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
       // -------------------------------------------------------------
       // 본문 삭제하기
 
@@ -202,6 +231,6 @@ const todoSlice = createSlice({
 });
 
 // 액션크리에이터는 컴포넌트에서 사용하기 위해 export 하고
-export const { retouchComment } = todoSlice.actions;
+export const { retouchComment, donetodos } = todoSlice.actions;
 // reducer 는 configStore에 등록하기 위해 export default 합니다.
 export default todoSlice.reducer;
