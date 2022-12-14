@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 import ButtonComponent from '../button/Button';
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { __getComments } from '../../redux/modules/todolist';
 import useInput from '../../hooks/useInput';
 
@@ -15,41 +15,57 @@ const CommentInputComponent = () => {
   const [nickname, onchangeNicknameHandler, resetNickname] = useInput();
   const [comment, onchangeCommentHandler, resetComment] = useInput();
 
+  const { isLoading } = useSelector((state) => state.todolist);
+
   //댓글 배열 소환
   useEffect(() => {
     dispatch(__getComments(param));
   }, [dispatch]);
 
   return (
-    <Wrap>
-      <NickWrap>
-        <h4>이름</h4>
-        <NickInput
-          type="text"
-          value={nickname}
-          onChange={onchangeNicknameHandler}
-        />
-      </NickWrap>
-      <CommentWrap>
-        <h4>코멘트</h4>
-        <CommentInput
-          type="text"
-          value={comment}
-          onChange={onchangeCommentHandler}
-        />
-      </CommentWrap>
-      <ButtonWrapWrap>
-        <ButtonWrap>
-          <ButtonComponent
-            getState={[nickname, comment, param]}
-            setState={[resetNickname, resetComment]}
-            value="CommentAdd"
-          />
-        </ButtonWrap>
-      </ButtonWrapWrap>
-    </Wrap>
+    <div>
+      {isLoading ? (
+        <LoadingTitle> Loading... </LoadingTitle>
+      ) : (
+        <Wrap>
+          <NickWrap>
+            <h4>이름</h4>
+            <NickInput
+              type="text"
+              value={nickname}
+              onChange={onchangeNicknameHandler}
+            />
+          </NickWrap>
+          <CommentWrap>
+            <h4>코멘트</h4>
+            <CommentInput
+              type="text"
+              value={comment}
+              onChange={onchangeCommentHandler}
+            />
+          </CommentWrap>
+          <ButtonWrapWrap>
+            <ButtonWrap>
+              <ButtonComponent
+                getState={[nickname, comment, param]}
+                setState={[resetNickname, resetComment]}
+                value="CommentAdd"
+              />
+            </ButtonWrap>
+          </ButtonWrapWrap>
+        </Wrap>
+      )}
+    </div>
   );
 };
+
+const LoadingTitle = styled.div`
+  margin: 50px auto;
+  width: 100%;
+  text-align: center;
+  font-size: 50px;
+  font: bold;
+`;
 
 const Wrap = styled.div`
   width: 100%;

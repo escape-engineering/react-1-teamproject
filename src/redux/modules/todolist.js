@@ -135,6 +135,8 @@ export const __retouchComment = createAsyncThunk(
         ...payload[1],
         commentdesc: payload[0],
       });
+      const { data } = await axios.get('http://localhost:3001/comments');
+      return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
@@ -287,6 +289,7 @@ const todoSlice = createSlice({
       // 로딩 완료. 성공 시
       .addCase(__retouchComment.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.comments = action.payload;
       })
       // 로딩 완료. 실패 시
       .addCase(__retouchComment.rejected, (state, action) => {
