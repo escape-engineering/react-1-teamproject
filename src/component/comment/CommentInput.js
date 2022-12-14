@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import ButtonComponent from '../button/Button';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { __getComments } from '../../redux/modules/todolist';
+import useInput from '../../hooks/useInput';
 
 const CommentInputComponent = () => {
   const dispatch = useDispatch();
@@ -11,18 +12,8 @@ const CommentInputComponent = () => {
   const param = useParams().id;
 
   //댓글관련 State
-  const [nickname, setNickname] = useState('');
-  const [comment, setComment] = useState('');
-
-  //Nickname input값 state설정
-  const nickWrite = ({ target: { value } }) => {
-    setNickname(value);
-  };
-
-  //comment input값 state설정
-  const commentWrite = ({ target: { value } }) => {
-    setComment(value);
-  };
+  const [nickname, onchangeNicknameHandler, resetNickname] = useInput();
+  const [comment, onchangeCommentHandler, resetComment] = useInput();
 
   //댓글 배열 소환
   useEffect(() => {
@@ -33,17 +24,25 @@ const CommentInputComponent = () => {
     <Wrap>
       <NickWrap>
         <h4>이름</h4>
-        <NickInput type="text" value={nickname} onChange={nickWrite} />
+        <NickInput
+          type="text"
+          value={nickname}
+          onChange={onchangeNicknameHandler}
+        />
       </NickWrap>
       <CommentWrap>
         <h4>코멘트</h4>
-        <CommentInput type="text" value={comment} onChange={commentWrite} />
+        <CommentInput
+          type="text"
+          value={comment}
+          onChange={onchangeCommentHandler}
+        />
       </CommentWrap>
       <ButtonWrapWrap>
         <ButtonWrap>
           <ButtonComponent
             getState={[nickname, comment, param]}
-            setState={[setNickname, setComment]}
+            setState={[resetNickname, resetComment]}
             value="CommentAdd"
           />
         </ButtonWrap>

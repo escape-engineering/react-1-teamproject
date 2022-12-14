@@ -19,6 +19,7 @@ const Comment = () => {
   //댓글 배열에서 해당 todo에 대한 댓글만 나오도록 필터링
   const todoComments = comments
     .filter((list) => list.postId === parseInt(params))
+    //최근에 남긴 댓글이 위로가도록 reverse
     .reverse();
 
   return (
