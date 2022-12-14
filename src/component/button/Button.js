@@ -6,8 +6,8 @@ import {
   __postTodos,
   __retouchComment,
   __DeleteTodo,
-  __DoneTodo,
-  __ShiftTodo,
+  __ToggleTodo,
+  __DetailDeleteTodo,
 } from "../../redux/modules/todolist";
 
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
-const ButtonComponent = ({ getState, setState, coLor, value }) => {
+const ButtonComponent = ({ getState, setState, color, value }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -41,7 +41,6 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
           title: title,
           desc: desc,
           isDone: false,
-          comments: [],
         };
         //api
         dispatch(__postTodos(newTodo));
@@ -59,9 +58,11 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   const GoBackPage = () => {
     navigate("/");
   };
-  //리스트삭제
+  //상세페이지본문삭제
   const DelInDetail = () => {
-    window.confirm("정말삭제할려고!?") ? alert("삭제 ㅠㅠ") : alert("살았다!");
+    const id = getState;
+    alert("삭제되었습니다");
+    dispatch(__DetailDeleteTodo(id));
   };
 
   //댓글 추가
@@ -114,20 +115,14 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
     dispatch(__DeleteTodo(id));
     setState(!todoLoad);
   };
-  // Todo 완료하기
+  // Todo 토글
   const DoneTodo = () => {
-    const [id, todoLoad, isDone] = getState;
-    dispatch(__DoneTodo([id, isDone]));
-    setState(!todoLoad);
-  };
-  // Todo 취소하기
-  const ShiftTodo = () => {
-    const [id, todoLoad, isDone] = getState;
-    dispatch(__ShiftTodo([id, isDone]));
+    const [list, todoLoad] = getState;
+    dispatch(__ToggleTodo(list));
     setState(!todoLoad);
   };
   // Todo 상세보기
-  const DetailTodo = (id) => {
+  const DetailTodo = () => {
     navigate(getState);
   };
 
@@ -167,10 +162,10 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
         DoneTodo();
         break;
       case "ShiftTodo":
-        ShiftTodo();
+        DoneTodo();
         break;
       case "DetailTodo":
-        DetailTodo(getState);
+        DetailTodo();
         break;
       default:
         break;
@@ -225,7 +220,7 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
   }, [value]);
 
   return (
-    <StyledButton btnCoLor={coLor} onClick={btnBunc}>
+    <StyledButton btnColor={color} onClick={btnBunc}>
       {btnName}
     </StyledButton>
   );
@@ -234,16 +229,16 @@ const ButtonComponent = ({ getState, setState, coLor, value }) => {
 const StyledButton = styled.button`
   width: 100%;
   height: 100%;
-  background-color: ${({ btnCoLor }) =>
-    btnCoLor === "red" ? "rgb(231, 181, 181)" : "rgb(191, 178, 225)"};
+  background-color: ${({ btnColor }) =>
+    btnColor === "red" ? "rgb(231, 181, 181)" : "rgb(191, 178, 225)"};
   border: none;
   font-weight: bold;
   color: white;
   border-radius: 10px;
   cursor: pointer;
   &:hover {
-    background-color: ${({ btnCoLor }) =>
-      btnCoLor === "red" ? "rgb(178, 84, 84)" : "rgb(122, 98, 184)"};
+    background-color: ${({ btnColor }) =>
+      btnColor === "red" ? "rgb(178, 84, 84)" : "rgb(122, 98, 184)"};
   }
 `;
 

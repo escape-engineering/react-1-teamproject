@@ -53,7 +53,7 @@ const Comment = () => {
                       />
                       <ButtonComponent
                         value="CommentInDelete"
-                        coLor="red"
+                        color="red"
                         getState={comment.id}
                       />
                     </ButtonWrap>

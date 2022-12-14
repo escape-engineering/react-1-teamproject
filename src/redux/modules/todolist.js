@@ -82,31 +82,14 @@ export const __DetailDeleteTodo = createAsyncThunk(
   }
 );
 // 리스트 토글
-export const __DoneTodo = createAsyncThunk(
+export const __ToggleTodo = createAsyncThunk(
   "doneTodo",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.patch(
-        `http://localhost:3001/Todo/${payload[0]}`,
-        { isDone: !payload[1] }
-      );
-      return thunkAPI.fulfillWithValue(data);
-    } catch (err) {
-      console.log(err);
-      return thunkAPI.rejectWithValue(err);
-    }
-  }
-);
-
-export const __ShiftTodo = createAsyncThunk(
-  "shiftTodo",
-  async (payload, thunkAPI) => {
-    try {
-      const { data } = await axios.patch(
-        `http://localhost:3001/Todo/${payload[0]}`,
-        { isDone: !payload[1] }
-      );
-      return thunkAPI.fulfillWithValue(data);
+      await axios.patch(`http://localhost:3001/Todo/${payload.id}`, {
+        isDone: !payload.isDone,
+      });
+      return thunkAPI.fulfillWithValue();
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
@@ -239,7 +222,6 @@ const todoSlice = createSlice({
       //로딩 완료. 성공 시
       .addCase(__DeleteTodo.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.Todo = [...state.Todo, action.payload];
       })
       //로딩 완료. 실패 시
       .addCase(__DeleteTodo.rejected, (state, action) => {
@@ -248,31 +230,18 @@ const todoSlice = createSlice({
       })
       // -------------------------------------------------------------
       // 리스트 토글
-      .addCase(__DoneTodo.pending, (state) => {
+      .addCase(__ToggleTodo.pending, (state) => {
         state.isLoading = true;
       })
       //로딩 완료. 성공 시
-      .addCase(__DoneTodo.fulfilled, (state, action) => {
+      .addCase(__ToggleTodo.fulfilled, (state, action) => {
         state.isLoading = false;
       })
       //로딩 완료. 실패 시
-      .addCase(__DoneTodo.rejected, (state, action) => {
+      .addCase(__ToggleTodo.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(__ShiftTodo.pending, (state) => {
-        state.isLoading = true;
-      })
-      //로딩 완료. 성공 시
-      .addCase(__ShiftTodo.fulfilled, (state, action) => {
-        state.isLoading = false;
-      })
-      //로딩 완료. 실패 시
-      .addCase(__ShiftTodo.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
       // -------------------------------------------------------------
       // 댓글 조회하기
       // 로딩 시작
