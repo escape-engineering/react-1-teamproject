@@ -35,7 +35,7 @@ const Detailcomponent = () => {
 
         <ButtonBox2>
           <ButtonComponent value="EditInDetail" />
-          <ButtonComponent value="DelInDetail" />
+          <ButtonComponent value="DelInDetail" color="red" />
         </ButtonBox2>
       </Detailbox>
     </div>
