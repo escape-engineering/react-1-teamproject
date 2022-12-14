@@ -1,16 +1,16 @@
-import styled from 'styled-components';
-import ButtonComponent from '../button/Button';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { __getComments, __getTodosDesc } from '../../redux/modules/todolist';
-import { useParams } from 'react-router-dom';
+import styled from "styled-components";
+import ButtonComponent from "../button/Button";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { __getComments, __getTodosDesc } from "../../redux/modules/todolist";
+import { useParams } from "react-router-dom";
 
 const Comment = () => {
   const params = useParams().id;
   const dispatch = useDispatch();
 
   // 댓글 수정 input을 위한 State
-  const [newCommentDesc, setNewCommentDesc] = useState('');
+  const [newCommentDesc, setNewCommentDesc] = useState("");
 
   // 댓글 수정 input을 위한 onChangeNewCommentHandler
   const onChangeNewCommentDescHandler = (e) => {
@@ -23,15 +23,12 @@ const Comment = () => {
     (state) => state.todolist
   );
 
-  // 댓글의 loading이 완료되면 리렌더링하는 용도의 state
-  const [commentLoad, setCommentLoad] = useState(false);
-
   const [commentOpen, setCommentOpen] = useState(true);
 
   //댓글 배열 소환
   useEffect(() => {
     dispatch(__getComments(params));
-  }, [dispatch, commentLoad, commentOpen]);
+  }, [dispatch, commentOpen]);
 
   //댓글 배열에서 해당 todo에 대한 댓글만 나오도록 필터링
   const todoComments = comments.filter(
@@ -57,8 +54,7 @@ const Comment = () => {
                       <ButtonComponent
                         value="CommentInDelete"
                         coLor="red"
-                        getState={[comment.id, commentLoad]}
-                        setState={setCommentLoad}
+                        getState={comment.id}
                       />
                     </ButtonWrap>
                   </ButtonWrapWrap>
@@ -74,13 +70,8 @@ const Comment = () => {
                   <RetouchButtonWrapWrap>
                     <RetouchButtonWrap>
                       <ButtonComponent
-                        getState={[
-                          newCommentDesc,
-                          comment,
-                          commentOpen,
-                          commentLoad,
-                        ]}
-                        setState={[setCommentOpen, setCommentLoad]}
+                        getState={[newCommentDesc, comment, commentOpen]}
+                        setState={setCommentOpen}
                         value="CommentRetouch"
                       />
                     </RetouchButtonWrap>
@@ -99,7 +90,7 @@ const RetouchCommentWrap = styled.div`
   height: 100%;
   padding: 10px;
   border-bottom: 1px solid green;
-  display: ${({ isOpen }) => (isOpen ? 'none' : 'block')};
+  display: ${({ isOpen }) => (isOpen ? "none" : "block")};
 `;
 
 const RetouchInput = styled.input`
@@ -126,7 +117,7 @@ const CommentWrap = styled.div`
   height: 100%;
   padding: 10px;
   border-bottom: 1px solid green;
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
 `;
 
 const ButtonWrap = styled.div`
