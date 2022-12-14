@@ -60,9 +60,11 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
   };
   //상세페이지본문삭제
   const DelInDetail = () => {
-    const id = getState;
-    alert("삭제되었습니다");
-    dispatch(__DetailDeleteTodo(id));
+    const [id] = getState;
+    if (window.confirm("삭제하시겠습니까?")) {
+      dispatch(__DetailDeleteTodo(id));
+      navigate("/");
+    }
   };
 
   //댓글 추가
@@ -91,7 +93,10 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
   };
   //댓글 수정
   const CommentRetouchOpen = () => {
-    setState(!getState);
+    const [commentOpen, commentdesc] = getState;
+    const [setCommentOpen, setNewCommentDesc] = setState;
+    setNewCommentDesc(commentdesc);
+    setCommentOpen(!commentOpen);
   };
   //댓글 수정완료
   const CommentRetouch = () => {

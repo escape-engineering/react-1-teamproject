@@ -70,6 +70,7 @@ export const __DeleteTodo = createAsyncThunk(
 export const __DetailDeleteTodo = createAsyncThunk(
   "detaildeleteTodo",
   async (payload, thunkAPI) => {
+    console.log(payload);
     try {
       const { data } = await axios.delete(
         `http://localhost:3001/Todo/${payload}`
@@ -85,6 +86,7 @@ export const __DetailDeleteTodo = createAsyncThunk(
 export const __ToggleTodo = createAsyncThunk(
   "doneTodo",
   async (payload, thunkAPI) => {
+    console.log(payload);
     try {
       await axios.patch(`http://localhost:3001/Todo/${payload.id}`, {
         isDone: !payload.isDone,
@@ -215,19 +217,19 @@ const todoSlice = createSlice({
 
       // -------------------------------------------------------------
       // 본문 삭제하기
-      // 로딩 시작
-      .addCase(__DeleteTodo.pending, (state) => {
+      .addCase(__DetailDeleteTodo.pending, (state) => {
         state.isLoading = true;
       })
       //로딩 완료. 성공 시
-      .addCase(__DeleteTodo.fulfilled, (state, action) => {
+      .addCase(__DetailDeleteTodo.fulfilled, (state, action) => {
         state.isLoading = false;
       })
       //로딩 완료. 실패 시
-      .addCase(__DeleteTodo.rejected, (state, action) => {
+      .addCase(__DetailDeleteTodo.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
+
       // -------------------------------------------------------------
       // 리스트 토글
       .addCase(__ToggleTodo.pending, (state) => {

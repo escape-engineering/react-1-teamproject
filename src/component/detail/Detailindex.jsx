@@ -35,7 +35,11 @@ const Detailcomponent = () => {
 
         <ButtonBox2>
           <ButtonComponent value="EditInDetail" />
-          <ButtonComponent value="DelInDetail" color="red" getState={params} />
+          <ButtonComponent
+            value="DelInDetail"
+            color="red"
+            getState={[todoDesc.id]}
+          />
         </ButtonBox2>
       </Detailbox>
     </div>
