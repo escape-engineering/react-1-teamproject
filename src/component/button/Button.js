@@ -7,6 +7,7 @@ import {
   __retouchComment,
   __DeleteTodo,
   __ToggleTodo,
+  __editDetail,
 } from "../../redux/modules/todolist";
 
 import { useNavigate } from "react-router-dom";
@@ -66,13 +67,20 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
   };
   //상세페이지 수정오픈
   const EditInDetail = () => {
-    const [editOpen] = getState;
-    const [seteditOpen] = setState;
+    const [editOpen, title, desc] = getState;
+    const [seteditOpen, setEditTitle, setEditDesc] = setState;
+    console.log(desc);
+    setEditTitle(title);
+    setEditDesc(desc);
     seteditOpen(!editOpen);
   };
   //상세페이지 수정완료
   const EditComlete = () => {
-    alert(1);
+    const [editTitle, editDesc, tododesc, editOpen, todoLoad] = getState;
+    const [seteditOpen, setTodoLoad] = setState;
+    dispatch(__editDetail([tododesc, editTitle, editDesc]));
+    seteditOpen(!editOpen);
+    setTodoLoad(!todoLoad);
   };
   //댓글 추가
   const CommentAdd = () => {
