@@ -12,10 +12,9 @@ const MainPage = () => {
     (state) => state.todolist
   );
 
-  const [todoLoad, setTodoLoad] = useState(false);
   useEffect(() => {
     dispatch(__getTodos());
-  }, [dispatch, todoLoad]);
+  }, [dispatch]);
   if (error) {
     return <div>{error}</div>;
   }
@@ -41,14 +40,9 @@ const MainPage = () => {
                       <ButtonComponent
                         value="DeleteTodo"
                         color="red"
-                        getState={[list.id, todoLoad]}
-                        setState={setTodoLoad}
+                        getState={list.id}
                       />
-                      <ButtonComponent
-                        value="DoneTodo"
-                        getState={[list, todoLoad]}
-                        setState={setTodoLoad}
-                      />
+                      <ButtonComponent value="DoneTodo" getState={list} />
                       <ButtonComponent
                         value="DetailTodo"
                         getState={`/list/${list.id}`}
@@ -72,14 +66,9 @@ const MainPage = () => {
                       <ButtonComponent
                         value="DeleteTodo"
                         color="red"
-                        getState={[list.id, todoLoad]}
-                        setState={setTodoLoad}
+                        getState={list.id}
                       />
-                      <ButtonComponent
-                        value="ShiftTodo"
-                        getState={[list, todoLoad]}
-                        setState={setTodoLoad}
-                      />
+                      <ButtonComponent value="ShiftTodo" getState={list} />
                       <ButtonComponent
                         value="DetailTodo"
                         getState={`/list/${list.id}`}
