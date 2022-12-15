@@ -4,7 +4,7 @@ import todolist from "../modules/todolist";
 
 const store = configureStore({
   reducer: { todolist: todolist },
-  devTools: window.location.href === "http://localhost:3000/",
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 export default store;
