@@ -105,9 +105,7 @@ export const __getComments = createAsyncThunk(
   "getComments",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(
-        "https://json-server-rouge.vercel.app/Comments"
-      );
+      const { data } = await axios.get(`${process.env.REACT_APP_URL}/Comments`);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
