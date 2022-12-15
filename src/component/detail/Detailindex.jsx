@@ -17,6 +17,9 @@ const Detailcomponent = () => {
   const [editTitle, setEditTitle] = useState(todoDesc.title);
   // 내용 수정 input state
   const [editDesc, setEditDesc] = useState(todoDesc.desc);
+
+  const [todoLoad, setTodoLoad] = useState(false);
+
   // 제목수정 onchange
   const onchanegeTitle = (e) => {
     let value = e.target.value;
@@ -28,7 +31,7 @@ const Detailcomponent = () => {
   };
   useEffect(() => {
     dispatch(__getTodosDesc(params));
-  }, [dispatch]);
+  }, [dispatch, todoLoad]);
   return (
     <div>
       <Detailbox>
@@ -73,7 +76,8 @@ const Detailcomponent = () => {
         <ButtonBox3>
           <ButtonComponent
             value={todoDesc.isDone ? "ShiftTodo" : "DoneTodo"}
-            getState={[todoDesc.id]}
+            getState={[todoDesc, todoLoad]}
+            setState={setTodoLoad}
           />
         </ButtonBox3>
         <ButtonBox4 isOpen={editOpen}>

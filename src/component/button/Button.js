@@ -7,7 +7,6 @@ import {
   __retouchComment,
   __DeleteTodo,
   __ToggleTodo,
-  __DetailDeleteTodo,
 } from "../../redux/modules/todolist";
 
 import { useNavigate } from "react-router-dom";
@@ -61,7 +60,7 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
   const DelInDetail = () => {
     const [id] = getState;
     if (window.confirm("삭제하시겠습니까?")) {
-      dispatch(__DetailDeleteTodo(id));
+      dispatch(__DeleteTodo(id));
       navigate("/");
     }
   };

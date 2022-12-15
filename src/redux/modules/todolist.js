@@ -55,10 +55,8 @@ export const __DeleteTodo = createAsyncThunk(
   "deleteTodo",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.delete(
-        `http://localhost:3001/Todo/${payload}`
-      );
-      return thunkAPI.fulfillWithValue(data);
+      await axios.delete(`http://localhost:3001/Todo/${payload}`);
+      return thunkAPI.fulfillWithValue();
     } catch (err) {
       console.log(err);
       return thunkAPI.rejectWithValue(err);
@@ -66,22 +64,8 @@ export const __DeleteTodo = createAsyncThunk(
   }
 );
 
-// 디테일페이지 본문 삭제 하기
-export const __DetailDeleteTodo = createAsyncThunk(
-  "detaildeleteTodo",
-  async (payload, thunkAPI) => {
-    console.log(payload);
-    try {
-      const { data } = await axios.delete(
-        `http://localhost:3001/Todo/${payload}`
-      );
-      return thunkAPI.fulfillWithValue(data);
-    } catch (err) {
-      console.log(err);
-      return thunkAPI.rejectWithValue(err);
-    }
-  }
-);
+// 본문 수정 하기
+
 // 리스트 토글
 export const __ToggleTodo = createAsyncThunk(
   "doneTodo",
@@ -149,7 +133,7 @@ export const __retouchComment = createAsyncThunk(
         ...payload[1],
         commentdesc: payload[0],
       });
-      const { data } = await axios.get('http://localhost:3001/comments');
+      const { data } = await axios.get("http://localhost:3001/comments");
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
@@ -218,15 +202,15 @@ const todoSlice = createSlice({
 
       // -------------------------------------------------------------
       // 본문 삭제하기
-      .addCase(__DetailDeleteTodo.pending, (state) => {
+      .addCase(__DeleteTodo.pending, (state) => {
         state.isLoading = true;
       })
       //로딩 완료. 성공 시
-      .addCase(__DetailDeleteTodo.fulfilled, (state, action) => {
+      .addCase(__DeleteTodo.fulfilled, (state, action) => {
         state.isLoading = false;
       })
       //로딩 완료. 실패 시
-      .addCase(__DetailDeleteTodo.rejected, (state, action) => {
+      .addCase(__DeleteTodo.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
