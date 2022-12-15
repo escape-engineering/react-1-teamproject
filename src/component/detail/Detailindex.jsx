@@ -14,14 +14,15 @@ const Detailcomponent = () => {
   // input창 open state
   const [editOpen, setEditOpen] = useState(true);
   // 제목 수정 input state
-  const [editTitle, setEditTitle] = useState(todoDesc.title);
+  const [editTitle, setEditTitle] = useState("");
   // 내용 수정 input state
-  const [editDesc, setEditDesc] = useState(todoDesc.desc);
+  const [editDesc, setEditDesc] = useState("");
   // 제목수정 onchange
   const onchanegeTitle = (e) => {
     let value = e.target.value;
     setEditTitle(value);
   };
+  // 내용수정 onchange
   const onchanegeDesc = (e) => {
     let value = e.target.value;
     setEditDesc(value);
@@ -49,12 +50,14 @@ const Detailcomponent = () => {
             type="text"
             isOpen={editOpen}
             placeholder={todoDesc.title}
+            onchanege={onchanegeTitle}
           />
           <h1>내용: {todoDesc.desc}</h1>
           <EditInput
             type="text"
             isOpen={editOpen}
             placeholder={todoDesc.desc}
+            onchanege={onchanegeDesc}
           />
           <h3>상태: {todoDesc.isDone ? "완료!" : "하는중~"} </h3>
         </TextBox>
@@ -77,7 +80,11 @@ const Detailcomponent = () => {
           />
         </ButtonBox3>
         <ButtonBox4 isOpen={editOpen}>
-          <ButtonComponent value={"EditComlete"} />
+          <ButtonComponent
+            value={"EditComlete"}
+            getState={[editTitle, editDesc, todoDesc]}
+            setState={[setEditTitle, setEditDesc]}
+          />
         </ButtonBox4>
       </Detailbox>
     </div>

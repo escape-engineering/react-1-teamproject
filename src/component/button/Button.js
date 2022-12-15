@@ -73,8 +73,11 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
   };
   //상세페이지 수정완료
   const EditComlete = () => {
-    alert(1);
+    const [editTitle, editDesc, todoDesc] = getState;
+    const [setEditTitle, setEditDesc] = setState;
+    console.log(setEditTitle);
   };
+
   //댓글 추가
   const CommentAdd = () => {
     const [nickname, comment, param] = getState;
