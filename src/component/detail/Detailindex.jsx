@@ -20,9 +20,6 @@ const Detailcomponent = () => {
   // 내용 수정 input state
   const [editDesc, setEditDesc] = useState("");
 
-  //로드용
-  const [todoLoad, setTodoLoad] = useState(false);
-
   // 제목수정 onchange
   const onchanegeTitle = (e) => {
     setEditTitle(e.target.value);
@@ -33,7 +30,7 @@ const Detailcomponent = () => {
   };
   useEffect(() => {
     dispatch(__getTodosDesc(params));
-  }, [dispatch, todoLoad, editOpen]);
+  }, [dispatch]);
   return (
     <div>
       {isLoading ? (
@@ -55,14 +52,14 @@ const Detailcomponent = () => {
           </DetailHeader>
 
           <TextBox>
-            <h1>제목: {todoDesc.title}</h1>
+            <h1>제목: {editOpen ? todoDesc.title : null}</h1>
             <EditInput
               type="text"
               isOpen={editOpen}
               value={editTitle}
               onChange={onchanegeTitle}
             />
-            <h1>내용: {todoDesc.desc}</h1>
+            <h1>내용: {editOpen ? todoDesc.desc : null}</h1>
             <EditInput
               type="text"
               isOpen={editOpen}
@@ -83,13 +80,7 @@ const Detailcomponent = () => {
               getState={[todoDesc.id]}
             />
           </ButtonBox2>
-          <ButtonBox3>
-            <ButtonComponent
-              value={todoDesc.isDone ? "ShiftTodo" : "DoneTodo"}
-              getState={[todoDesc, todoLoad]}
-              setState={setTodoLoad}
-            />
-          </ButtonBox3>
+          <ButtonBox3></ButtonBox3>
           <ButtonBox4 isOpen={editOpen}>
             <ButtonComponent
               value={"EditComlete"}
