@@ -21,7 +21,7 @@ const Comment = () => {
   const todoComments = comments
     .filter((list) => list.postId === parseInt(params))
     //최근에 남긴 댓글이 위로가도록 reverse
-    .reverse();
+    .sort((a, b) => b.id - a.id);
 
   return (
     <div>
