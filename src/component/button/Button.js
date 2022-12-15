@@ -7,7 +7,7 @@ import {
   __retouchComment,
   __DeleteTodo,
   __ToggleTodo,
-  __DetailDeleteTodo,
+  __editDetail,
 } from "../../redux/modules/todolist";
 
 import { useNavigate } from "react-router-dom";
@@ -61,23 +61,27 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
   const DelInDetail = () => {
     const [id] = getState;
     if (window.confirm("삭제하시겠습니까?")) {
-      dispatch(__DetailDeleteTodo(id));
+      dispatch(__DeleteTodo(id));
       navigate("/");
     }
   };
   //상세페이지 수정오픈
   const EditInDetail = () => {
-    const [editOpen] = getState;
-    const [seteditOpen] = setState;
+    const [editOpen, title, desc] = getState;
+    const [seteditOpen, setEditTitle, setEditDesc] = setState;
+    console.log(desc);
+    setEditTitle(title);
+    setEditDesc(desc);
     seteditOpen(!editOpen);
   };
   //상세페이지 수정완료
   const EditComlete = () => {
-    const [editTitle, editDesc, todoDesc] = getState;
-    const [setEditTitle, setEditDesc] = setState;
-    console.log(setEditTitle);
+    const [editTitle, editDesc, tododesc, editOpen, todoLoad] = getState;
+    const [seteditOpen, setTodoLoad] = setState;
+    dispatch(__editDetail([tododesc, editTitle, editDesc]));
+    seteditOpen(!editOpen);
+    setTodoLoad(!todoLoad);
   };
-
   //댓글 추가
   const CommentAdd = () => {
     const [nickname, comment, param] = getState;

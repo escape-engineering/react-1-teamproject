@@ -1,15 +1,16 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { __getComments } from "../../redux/modules/todolist";
-import { useParams } from "react-router-dom";
-import CommentItem from "./CommentItem";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { __getComments } from '../../redux/modules/todolist';
+import { useParams } from 'react-router-dom';
+import CommentItem from './CommentItem';
+import styled from 'styled-components';
 
 const Comment = () => {
   const params = useParams().id;
   const dispatch = useDispatch();
 
   // params에 맞는 todo 소환
-  const { comments } = useSelector((state) => state.todolist);
+  const { isLoading, comments } = useSelector((state) => state.todolist);
 
   //댓글 배열 소환
   useEffect(() => {
@@ -24,13 +25,22 @@ const Comment = () => {
 
   return (
     <div>
-      {comments
-        ? todoComments.map((comment) => {
-            return <CommentItem key={comment.id} comment={comment} />;
-          })
-        : null}
+      {isLoading ? (
+        <LoadingTitle> Loading... </LoadingTitle>
+      ) : comments ? (
+        todoComments.map((comment) => {
+          return <CommentItem key={comment.id} comment={comment} />;
+        })
+      ) : null}
     </div>
   );
 };
 
+const LoadingTitle = styled.div`
+  margin: 50px auto;
+  width: 100%;
+  text-align: center;
+  font-size: 50px;
+  font: bold;
+`;
 export default Comment;

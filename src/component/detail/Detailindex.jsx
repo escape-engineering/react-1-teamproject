@@ -17,19 +17,21 @@ const Detailcomponent = () => {
   const [editTitle, setEditTitle] = useState("");
   // 내용 수정 input state
   const [editDesc, setEditDesc] = useState("");
+
+  //로드용
+  const [todoLoad, setTodoLoad] = useState(false);
+
   // 제목수정 onchange
   const onchanegeTitle = (e) => {
-    let value = e.target.value;
-    setEditTitle(value);
+    setEditTitle(e.target.value);
   };
   // 내용수정 onchange
   const onchanegeDesc = (e) => {
-    let value = e.target.value;
-    setEditDesc(value);
+    setEditDesc(e.target.value);
   };
   useEffect(() => {
     dispatch(__getTodosDesc(params));
-  }, [dispatch]);
+  }, [dispatch, todoLoad]);
   return (
     <div>
       <Detailbox>
@@ -49,23 +51,23 @@ const Detailcomponent = () => {
           <EditInput
             type="text"
             isOpen={editOpen}
-            placeholder={todoDesc.title}
-            onchanege={onchanegeTitle}
+            value={editTitle}
+            onChange={onchanegeTitle}
           />
           <h1>내용: {todoDesc.desc}</h1>
           <EditInput
             type="text"
             isOpen={editOpen}
-            placeholder={todoDesc.desc}
-            onchanege={onchanegeDesc}
+            value={editDesc}
+            onChange={onchanegeDesc}
           />
           <h3>상태: {todoDesc.isDone ? "완료!" : "하는중~"} </h3>
         </TextBox>
         <ButtonBox2>
           <ButtonComponent
             value="EditInDetailOpen"
-            getState={[editOpen]}
-            setState={[setEditOpen]}
+            getState={[editOpen, todoDesc.title, todoDesc.desc]}
+            setState={[setEditOpen, setEditTitle, setEditDesc]}
           />
           <ButtonComponent
             value="DelInDetail"
@@ -76,14 +78,15 @@ const Detailcomponent = () => {
         <ButtonBox3>
           <ButtonComponent
             value={todoDesc.isDone ? "ShiftTodo" : "DoneTodo"}
-            getState={[todoDesc.id]}
+            getState={[todoDesc, todoLoad]}
+            setState={setTodoLoad}
           />
         </ButtonBox3>
         <ButtonBox4 isOpen={editOpen}>
           <ButtonComponent
             value={"EditComlete"}
-            getState={[editTitle, editDesc, todoDesc]}
-            setState={[setEditTitle, setEditDesc]}
+            getState={[editTitle, editDesc, todoDesc, editOpen, todoLoad]}
+            setState={[setEditOpen, setTodoLoad]}
           />
         </ButtonBox4>
       </Detailbox>

@@ -1,6 +1,6 @@
-import CommentInputComponent from "../component/comment/CommentInput";
-import Comment from "../component/comment/Comment";
-import Detailcomponent from "../component/detail/Detailindex";
+import CommentInputComponent from '../component/comment/CommentInput';
+import Comment from '../component/comment/Comment';
+import Detailcomponent from '../component/detail/Detailindex';
 
 const DetailPage = () => {
   return (
