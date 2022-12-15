@@ -69,18 +69,15 @@ const ButtonComponent = ({ getState, setState, color, value }) => {
   const EditInDetail = () => {
     const [editOpen, title, desc] = getState;
     const [seteditOpen, setEditTitle, setEditDesc] = setState;
-    console.log(desc);
     setEditTitle(title);
     setEditDesc(desc);
     seteditOpen(!editOpen);
   };
   //상세페이지 수정완료
   const EditComlete = () => {
-    const [editTitle, editDesc, tododesc, editOpen, todoLoad] = getState;
-    const [seteditOpen, setTodoLoad] = setState;
+    const [editTitle, editDesc, tododesc, editOpen] = getState;
     dispatch(__editDetail([tododesc, editTitle, editDesc]));
-    seteditOpen(!editOpen);
-    setTodoLoad(!todoLoad);
+    setState(!editOpen);
   };
   //댓글 추가
   const CommentAdd = () => {
