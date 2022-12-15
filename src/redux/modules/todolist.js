@@ -16,7 +16,7 @@ export const __getTodos = createAsyncThunk(
   "getTodos",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get("http://localhost:3001/Todo");
+      const { data } = await axios.get(`${process.env.REACT_APP_URL}/Todo`);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
@@ -29,7 +29,9 @@ export const __getTodosDesc = createAsyncThunk(
   "getTodosDesc",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/Todo/${payload}`);
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_URL}/Todo/${payload}`
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
@@ -42,7 +44,10 @@ export const __postTodos = createAsyncThunk(
   "postTodos",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post("http://localhost:3001/Todo", payload);
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_URL}/Todo`,
+        payload
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
@@ -55,7 +60,7 @@ export const __DeleteTodo = createAsyncThunk(
   "deleteTodo",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3001/Todo/${payload}`);
+      await axios.delete(`${process.env.REACT_APP_URL}/Todo/${payload}`);
       return thunkAPI.fulfillWithValue();
     } catch (err) {
       console.log(err);
@@ -69,8 +74,7 @@ export const __editDetail = createAsyncThunk(
   "editDetail",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
-      await axios.patch(`http://localhost:3001/Todo/${payload[0].id}`, {
+      await axios.patch(`${process.env.REACT_APP_URL}/Todo/${payload[0].id}`, {
         title: payload[1],
         desc: payload[2],
       });
@@ -86,7 +90,7 @@ export const __ToggleTodo = createAsyncThunk(
   "doneTodo",
   async (payload, thunkAPI) => {
     try {
-      await axios.patch(`http://localhost:3001/Todo/${payload.id}`, {
+      await axios.patch(`${process.env.REACT_APP_URL}/Todo/${payload.id}`, {
         isDone: !payload.isDone,
       });
       return thunkAPI.fulfillWithValue();
@@ -101,7 +105,9 @@ export const __getComments = createAsyncThunk(
   "getComments",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get("http://localhost:3001/comments");
+      const { data } = await axios.get(
+        "https://json-server-rouge.vercel.app/Comments"
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
@@ -115,7 +121,7 @@ export const __postComments = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3001/comments",
+        `${process.env.REACT_APP_URL}/Comments`,
         payload
       );
       return thunkAPI.fulfillWithValue(data);
@@ -130,8 +136,8 @@ export const __deleteComment = createAsyncThunk(
   "deleteComment",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3001/comments/${payload}`);
-      const { data } = await axios.get(`http://localhost:3001/comments`);
+      await axios.delete(`${process.env.REACT_APP_URL}/Comments/${payload}`);
+      const { data } = await axios.get(`${process.env.REACT_APP_URL}/Comments`);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);
@@ -144,11 +150,14 @@ export const __retouchComment = createAsyncThunk(
   "retouchComment",
   async (payload, thunkAPI) => {
     try {
-      await axios.patch(`http://localhost:3001/comments/${payload[1].id}`, {
-        ...payload[1],
-        commentdesc: payload[0],
-      });
-      const { data } = await axios.get("http://localhost:3001/comments");
+      await axios.patch(
+        `${process.env.REACT_APP_URL}/Comments/${payload[1].id}`,
+        {
+          ...payload[1],
+          commentdesc: payload[0],
+        }
+      );
+      const { data } = await axios.get(`${process.env.REACT_APP_URL}/Comments`);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       console.log(err);

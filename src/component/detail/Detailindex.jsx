@@ -9,7 +9,9 @@ const Detailcomponent = () => {
   const params = useParams().id;
   const dispatch = useDispatch();
 
-  const { todoDesc, comments } = useSelector((state) => state.todolist);
+  const { todoDesc, comments, isLoading } = useSelector(
+    (state) => state.todolist
+  );
 
   // input창 open state
   const [editOpen, setEditOpen] = useState(true);
@@ -31,65 +33,72 @@ const Detailcomponent = () => {
   };
   useEffect(() => {
     dispatch(__getTodosDesc(params));
-  }, [dispatch, todoLoad]);
+  }, [dispatch, todoLoad, editOpen]);
   return (
     <div>
-      <Detailbox>
-        <DetailHeader>
-          <Pagenum>page num :{todoDesc.id}</Pagenum>
-          <CommentNum>
-            댓글:
-            {comments.filter((list) => list.postId === parseInt(params)).length}
-          </CommentNum>
-          <ButtonBox>
-            <ButtonComponent value="BackPage" />
-          </ButtonBox>
-        </DetailHeader>
+      {isLoading ? (
+        <div>now Loading...</div>
+      ) : (
+        <Detailbox>
+          <DetailHeader>
+            <Pagenum>page num :{todoDesc.id}</Pagenum>
+            <CommentNum>
+              댓글:
+              {
+                comments.filter((list) => list.postId === parseInt(params))
+                  .length
+              }
+            </CommentNum>
+            <ButtonBox>
+              <ButtonComponent value="BackPage" />
+            </ButtonBox>
+          </DetailHeader>
 
-        <TextBox>
-          <h1>제목: {todoDesc.title}</h1>
-          <EditInput
-            type="text"
-            isOpen={editOpen}
-            value={editTitle}
-            onChange={onchanegeTitle}
-          />
-          <h1>내용: {todoDesc.desc}</h1>
-          <EditInput
-            type="text"
-            isOpen={editOpen}
-            value={editDesc}
-            onChange={onchanegeDesc}
-          />
-          <h3>상태: {todoDesc.isDone ? "완료!" : "하는중~"} </h3>
-        </TextBox>
-        <ButtonBox2>
-          <ButtonComponent
-            value="EditInDetailOpen"
-            getState={[editOpen, todoDesc.title, todoDesc.desc]}
-            setState={[setEditOpen, setEditTitle, setEditDesc]}
-          />
-          <ButtonComponent
-            value="DelInDetail"
-            color="red"
-            getState={[todoDesc.id]}
-          />
-        </ButtonBox2>
-        <ButtonBox3>
-          <ButtonComponent
-            value={todoDesc.isDone ? "ShiftTodo" : "DoneTodo"}
-            getState={[todoDesc, todoLoad]}
-            setState={setTodoLoad}
-          />
-        </ButtonBox3>
-        <ButtonBox4 isOpen={editOpen}>
-          <ButtonComponent
-            value={"EditComlete"}
-            getState={[editTitle, editDesc, todoDesc, editOpen, todoLoad]}
-            setState={[setEditOpen, setTodoLoad]}
-          />
-        </ButtonBox4>
-      </Detailbox>
+          <TextBox>
+            <h1>제목: {todoDesc.title}</h1>
+            <EditInput
+              type="text"
+              isOpen={editOpen}
+              value={editTitle}
+              onChange={onchanegeTitle}
+            />
+            <h1>내용: {todoDesc.desc}</h1>
+            <EditInput
+              type="text"
+              isOpen={editOpen}
+              value={editDesc}
+              onChange={onchanegeDesc}
+            />
+            <h3>상태: {todoDesc.isDone ? "완료!" : "하는중~"} </h3>
+          </TextBox>
+          <ButtonBox2>
+            <ButtonComponent
+              value="EditInDetailOpen"
+              getState={[editOpen, todoDesc.title, todoDesc.desc]}
+              setState={[setEditOpen, setEditTitle, setEditDesc]}
+            />
+            <ButtonComponent
+              value="DelInDetail"
+              color="red"
+              getState={[todoDesc.id]}
+            />
+          </ButtonBox2>
+          <ButtonBox3>
+            <ButtonComponent
+              value={todoDesc.isDone ? "ShiftTodo" : "DoneTodo"}
+              getState={[todoDesc, todoLoad]}
+              setState={setTodoLoad}
+            />
+          </ButtonBox3>
+          <ButtonBox4 isOpen={editOpen}>
+            <ButtonComponent
+              value={"EditComlete"}
+              getState={[editTitle, editDesc, todoDesc, editOpen]}
+              setState={setEditOpen}
+            />
+          </ButtonBox4>
+        </Detailbox>
+      )}
     </div>
   );
 };
