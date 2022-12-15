@@ -2,7 +2,13 @@
 
 ## 실행화면 및 배포주소
 
+![심화1](https://user-images.githubusercontent.com/117638805/207820790-1d317de1-f54b-4b0a-98fd-71e873619501.png)
+![심화2](https://user-images.githubusercontent.com/117638805/207820811-201c5e60-77af-4dc2-bc72-1161a9015149.png)
+https://react-1-teamproject.vercel.app/
+
 ## 사용 라이브러리
+
+react-router-dom, redux, redux-toolkit, json-server, axios, styled-components
 
 ## truoble shooting
 
@@ -42,6 +48,18 @@
 
 ---
 
-## 코드리뷰
+-발생
+댓글 추가 시 최신순으로 정렬되지 않음 -원인
+정렬하는 방식인 reverse()가 적절히 작동하지 않음 -해결
+sort()를 사용하여 Date.now()로 정의되는 id값들에 대해 내림차순으로 정렬함
 
-## 컴포넌트 구분 기준
+---
+
+-발생
+댓글 수정 버튼 클릭 시 모든 댓글수정창이 열림 -원인
+수정 화면을 보이게하는 commentOpen State를 모든 comment가 공유함 -해결
+comment에 대한 컴포넌트를 분리하여 State를 각 comment가 다르게 가지도록 함
+
+---
+
+## 코드리뷰
